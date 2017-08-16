@@ -1,0 +1,12 @@
+c:\users\danny\documents\visual studio 2013\Projects\ICG\ICG\bin\Debug\ICG.exe
+c:\users\danny\documents\visual studio 2013\Projects\ICG\ICG\bin\Debug\ICG.pdb
+c:\users\danny\documents\visual studio 2013\Projects\ICG\ICG\bin\Debug\ICG.xml
+c:\users\danny\documents\visual studio 2013\Projects\ICG\ICG\bin\Debug\EncryptComp.dll
+c:\users\danny\documents\visual studio 2013\Projects\ICG\ICG\obj\Debug\ICG.Form1.resources
+c:\users\danny\documents\visual studio 2013\Projects\ICG\ICG\obj\Debug\ICG.frmConfig.resources
+c:\users\danny\documents\visual studio 2013\Projects\ICG\ICG\obj\Debug\ICG.Resources.resources
+c:\users\danny\documents\visual studio 2013\Projects\ICG\ICG\obj\Debug\ICG.vbproj.GenerateResource.Cache
+c:\users\danny\documents\visual studio 2013\Projects\ICG\ICG\obj\Debug\ICG.exe
+c:\users\danny\documents\visual studio 2013\Projects\ICG\ICG\obj\Debug\ICG.xml
+c:\users\danny\documents\visual studio 2013\Projects\ICG\ICG\obj\Debug\ICG.pdb
+C:\Users\DANNY\Documents\Visual Studio 2013\Projects\ICG\ICG\obj\Debug\ICG.vbprojResolveAssemblyReference.cache

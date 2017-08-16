@@ -1,0 +1,8 @@
+Sin Utilizacion Del Sistema Financiero	01
+Compensacion De Deudas	15
+Tarjeta De Debito	16
+Dinero Electronico	17
+Tarjeta Prepago	18
+Tarjeta De Credito	19
+Otros Con Utilizacion Del Sistema Financiero	20
+Endoso De Titulos	21

@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<iva version="1.0">
+  <TipoIDInformante>4</TipoIDInformante>
+  <IdInformante>1790015785001</IdInformante>
+  <razonSocial>CONELSA CONDUCTORES ELECTRICOS SA</razonSocial>
+  <numEstabRuc>2</numEstabRuc>
+  <totalVentas>0</totalVentas>
+  <codigoOperativo>IVA</codigoOperativo>
+  <compras>
+    <detalleCompras>
+      <codSustento>1</codSustento>
+      <tpIdProv>01</tpIdProv>
+      <idProv>0190123251001</idProv>
+      <tipoComprobante>1</tipoComprobante>
+      <parteRel>SI</parteRel>
+      <fechaRegistro>18/07/2017</fechaRegistro>
+      <establecimiento>898</establecimiento>
+      <puntoEmision>456</puntoEmision>
+      <secuencial>565655555</secuencial>
+      <fechaEmision>18/07/2017</fechaEmision>
+      <autorizacion>2315656565</autorizacion>
+      <baseNoGraIva>0</baseNoGraIva>
+      <baseImponible>0</baseImponible>
+      <baseImpGrav>56</baseImpGrav>
+      <baseImpExe>0</baseImpExe>
+      <montoIce>0</montoIce>
+      <montoIva>7.84</montoIva>
+      <valRetBien10>0</valRetBien10>
+      <valRetServ20>0</valRetServ20>
+      <valorRetBienes>0</valorRetBienes>
+      <ValorRetServicios>0</ValorRetServicios>
+      <valRetServ100>0</valRetServ100>
+      <totbasesImpReemb>0</totbasesImpReemb>
+      <pagoExterior>
+        <pagoLocExt>01</pagoLocExt>
+        <paisEfecPago>NA</paisEfecPago>
+        <aplicConvDobTrib>NA</aplicConvDobTrib>
+        <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
+      </pagoExterior>
+      <air>
+        <detalleAir>
+          <codRetAir>312</codRetAir>
+          <baseImpAir>56</baseImpAir>
+          <porcentajeAir>1</porcentajeAir>
+          <valRetAir>0.56</valRetAir>
+        </detalleAir>
+      </air>
+      <estabRetencion1>001</estabRetencion1>
+      <ptoEmiRetencion1>001</ptoEmiRetencion1>
+      <secRetencion1>021235321</secRetencion1>
+      <autRetencion1>12:00:00 a. m.</autRetencion1>
+      <fechaEmiRet1>18/07/2017</fechaEmiRet1>
+    </detalleCompras>
+    <detalleCompras>
+      <codSustento>1</codSustento>
+      <tpIdProv />
+      <idProv />
+      <tipoComprobante>1</tipoComprobante>
+      <parteRel>NO</parteRel>
+      <fechaRegistro>24/07/2017</fechaRegistro>
+      <establecimiento>001</establecimiento>
+      <puntoEmision>232</puntoEmision>
+      <secuencial>023565666</secuencial>
+      <fechaEmision>24/07/2017</fechaEmision>
+      <autorizacion>2315656565</autorizacion>
+      <baseNoGraIva>0</baseNoGraIva>
+      <baseImponible>0</baseImponible>
+      <baseImpGrav>56</baseImpGrav>
+      <baseImpExe>0</baseImpExe>
+      <montoIce>0</montoIce>
+      <montoIva>7.84</montoIva>
+      <valRetBien10>0</valRetBien10>
+      <valRetServ20>0</valRetServ20>
+      <valorRetBienes>0</valorRetBienes>
+      <ValorRetServicios>0</ValorRetServicios>
+      <valRetServ100>0</valRetServ100>
+      <totbasesImpReemb>0</totbasesImpReemb>
+      <pagoExterior>
+        <pagoLocExt>01</pagoLocExt>
+        <paisEfecPago>NA</paisEfecPago>
+        <aplicConvDobTrib>NA</aplicConvDobTrib>
+        <pagExtSujRetNorLeg>NA</pagExtSujRetNorLeg>
+      </pagoExterior>
+      <air>
+        <detalleAir>
+          <codRetAir>332</codRetAir>
+          <baseImpAir>56</baseImpAir>
+          <porcentajeAir>0</porcentajeAir>
+          <valRetAir>0</valRetAir>
+        </detalleAir>
+      </air>
+      <estabRetencion1>001</estabRetencion1>
+      <ptoEmiRetencion1>001</ptoEmiRetencion1>
+      <secRetencion1>021235321</secRetencion1>
+      <autRetencion1>12:00:00 a. m.</autRetencion1>
+      <fechaEmiRet1>24/07/2017</fechaEmiRet1>
+    </detalleCompras>
+  </compras>
+  <Ventas />
+  <ventasEstablecimiento />
+  <exportaciones>
+    <detalleExportaciones>
+      <tpIdClienteEx>02</tpIdClienteEx>
+      <idClienteEx>0906659081</idClienteEx>
+      <parteRelExp>SI</parteRelExp>
+      <tipoRegi />
+      <paisEfecPagoGen>NA</paisEfecPagoGen>
+      <paisEfecExp />
+      <exportacionDe>01</exportacionDe>
+      <tipoComprobante />
+      <distAduanero>555</distAduanero>
+      <anio>2017</anio>
+      <regimen>23</regimen>
+      <docTransp />
+      <fechaEmbarque>12:00:00 a. m.</fechaEmbarque>
+      <valorFOB>566</valorFOB>
+      <valorFOBComprobante>251</valorFOBComprobante>
+      <establecimiento>001</establecimiento>
+      <puntoEmision>001</puntoEmision>
+      <autorizacion />
+      <fechaEmision>18/07/2017</fechaEmision>
+    </detalleExportaciones>
+  </exportaciones>
+  <anulados>
+    <detalleAnulados>
+      <tipoComprobante>01</tipoComprobante>
+      <establecimiento>001</establecimiento>
+      <puntoEmision>005</puntoEmision>
+      <secuencialInicio>47</secuencialInicio>
+      <secuencialFin>47</secuencialFin>
+      <autorizacion />
+    </detalleAnulados>
+  </anulados>
+</iva>
