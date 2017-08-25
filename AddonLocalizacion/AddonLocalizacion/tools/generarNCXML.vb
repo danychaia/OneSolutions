@@ -1,4 +1,5 @@
 ﻿Imports System.Xml
+Imports System.IO
 
 Public Class generarNCXML
 
@@ -71,7 +72,7 @@ Public Class generarNCXML
                     writer.WriteStartElement("totalImpuesto")
                     createNode("codigo", oRecord.Fields.Item(0).Value.ToString, writer)
                     createNode("codigoPorcentaje", oRecord.Fields.Item(1).Value.ToString, writer)
-                    createNode("baseImponible", oRecord.Fields.Item(2).Value.ToString, writer)                    
+                    createNode("baseImponible", oRecord.Fields.Item(2).Value.ToString, writer)
                     createNode("valor", oRecord.Fields.Item(4).Value.ToString, writer)
                     writer.WriteEndElement()
                     oRecord.MoveNext()
@@ -130,6 +131,17 @@ Public Class generarNCXML
             ''Cierre Nota de crédito 
             writer.WriteEndElement()
             writer.Close()
+            If Directory.Exists("C:\OS_FE") = False Then
+                Directory.CreateDirectory("C:\OS_FE")
+            End If
+            Dim esta = Application.StartupPath & "\Comprobante (NC) No." & DocEntry.ToString & ".xml"
+            Dim va = "C:\OS_FE\Comprobante (NC) No." & DocEntry.ToString & ".xml"
+            If File.Exists(va) Then
+                File.Delete(va)
+                File.Move(esta, va)
+            Else
+                File.Move(esta, va)
+            End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try

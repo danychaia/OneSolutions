@@ -33,6 +33,12 @@ Partial Class frmConfig
         Me.btnGuardar = New System.Windows.Forms.Button()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.txtHora = New System.Windows.Forms.TextBox()
+        Me.txtbSap = New System.Windows.Forms.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.txtContraSap = New System.Windows.Forms.TextBox()
+        Me.txtUsrSAp = New System.Windows.Forms.TextBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Label8 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Label1
@@ -55,21 +61,21 @@ Partial Class frmConfig
         '
         'txtServer
         '
-        Me.txtServer.Location = New System.Drawing.Point(111, 19)
+        Me.txtServer.Location = New System.Drawing.Point(138, 19)
         Me.txtServer.Name = "txtServer"
         Me.txtServer.Size = New System.Drawing.Size(100, 20)
         Me.txtServer.TabIndex = 2
         '
         'txtbase
         '
-        Me.txtbase.Location = New System.Drawing.Point(111, 47)
+        Me.txtbase.Location = New System.Drawing.Point(138, 47)
         Me.txtbase.Name = "txtbase"
         Me.txtbase.Size = New System.Drawing.Size(100, 20)
         Me.txtbase.TabIndex = 3
         '
         'txtContra
         '
-        Me.txtContra.Location = New System.Drawing.Point(111, 101)
+        Me.txtContra.Location = New System.Drawing.Point(138, 101)
         Me.txtContra.Name = "txtContra"
         Me.txtContra.Size = New System.Drawing.Size(100, 20)
         Me.txtContra.TabIndex = 7
@@ -77,7 +83,7 @@ Partial Class frmConfig
         '
         'txtuser
         '
-        Me.txtuser.Location = New System.Drawing.Point(111, 73)
+        Me.txtuser.Location = New System.Drawing.Point(138, 73)
         Me.txtuser.Name = "txtuser"
         Me.txtuser.Size = New System.Drawing.Size(100, 20)
         Me.txtuser.TabIndex = 6
@@ -102,7 +108,7 @@ Partial Class frmConfig
         '
         'btnGuardar
         '
-        Me.btnGuardar.Location = New System.Drawing.Point(78, 158)
+        Me.btnGuardar.Location = New System.Drawing.Point(94, 233)
         Me.btnGuardar.Name = "btnGuardar"
         Me.btnGuardar.Size = New System.Drawing.Size(75, 23)
         Me.btnGuardar.TabIndex = 8
@@ -120,16 +126,71 @@ Partial Class frmConfig
         '
         'txtHora
         '
-        Me.txtHora.Location = New System.Drawing.Point(111, 127)
+        Me.txtHora.Location = New System.Drawing.Point(138, 127)
         Me.txtHora.Name = "txtHora"
         Me.txtHora.Size = New System.Drawing.Size(100, 20)
         Me.txtHora.TabIndex = 10
         '
+        'txtbSap
+        '
+        Me.txtbSap.Location = New System.Drawing.Point(138, 153)
+        Me.txtbSap.Name = "txtbSap"
+        Me.txtbSap.Size = New System.Drawing.Size(100, 20)
+        Me.txtbSap.TabIndex = 12
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(12, 156)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(59, 13)
+        Me.Label6.TabIndex = 11
+        Me.Label6.Text = "BASE SAP"
+        '
+        'txtContraSap
+        '
+        Me.txtContraSap.Location = New System.Drawing.Point(138, 207)
+        Me.txtContraSap.Name = "txtContraSap"
+        Me.txtContraSap.Size = New System.Drawing.Size(100, 20)
+        Me.txtContraSap.TabIndex = 16
+        Me.txtContraSap.UseSystemPasswordChar = True
+        '
+        'txtUsrSAp
+        '
+        Me.txtUsrSAp.Location = New System.Drawing.Point(138, 179)
+        Me.txtUsrSAp.Name = "txtUsrSAp"
+        Me.txtUsrSAp.Size = New System.Drawing.Size(100, 20)
+        Me.txtUsrSAp.TabIndex = 15
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(12, 210)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(105, 13)
+        Me.Label7.TabIndex = 14
+        Me.Label7.Text = "CONTRASEÑA SAP"
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(12, 182)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(80, 13)
+        Me.Label8.TabIndex = 13
+        Me.Label8.Text = "USUARIO SAP"
+        '
         'frmConfig
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(258, 193)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit
+        Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.ClientSize = New System.Drawing.Size(280, 264)
+        Me.Controls.Add(Me.txtContraSap)
+        Me.Controls.Add(Me.txtUsrSAp)
+        Me.Controls.Add(Me.Label7)
+        Me.Controls.Add(Me.Label8)
+        Me.Controls.Add(Me.txtbSap)
+        Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.txtHora)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.btnGuardar)
@@ -141,6 +202,7 @@ Partial Class frmConfig
         Me.Controls.Add(Me.txtServer)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "frmConfig"
@@ -160,4 +222,10 @@ Partial Class frmConfig
     Friend WithEvents btnGuardar As System.Windows.Forms.Button
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents txtHora As System.Windows.Forms.TextBox
+    Friend WithEvents txtbSap As System.Windows.Forms.TextBox
+    Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents txtContraSap As System.Windows.Forms.TextBox
+    Friend WithEvents txtUsrSAp As System.Windows.Forms.TextBox
+    Friend WithEvents Label7 As System.Windows.Forms.Label
+    Friend WithEvents Label8 As System.Windows.Forms.Label
 End Class

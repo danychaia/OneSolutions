@@ -114,7 +114,7 @@ Public Class Form1
         End If
     End Function
 
-    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs)
 
     End Sub
 
@@ -123,5 +123,17 @@ Public Class Form1
         MyThread2.IsBackground = True
         MyThread2.Name = "MyThreadFactura2"
         MyThread2.Start()
+    End Sub
+
+    Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
+        If Me.WindowState = FormWindowState.Minimized Then
+            Me.Hide()
+            NotifyIcon1.ShowBalloonTip(500, "Click Me", "ICG Interfaz Panel", ToolTipIcon.Info)
+        End If
+    End Sub
+
+    Private Sub NotifyIcon1_DoubleClick(sender As Object, e As EventArgs) Handles NotifyIcon1.DoubleClick
+        Me.Show()
+        NotifyIcon1.ShowBalloonTip(500, "Click Me", "ICG Interfaz Panel", ToolTipIcon.Info)
     End Sub
 End Class

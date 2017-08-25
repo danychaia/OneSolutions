@@ -1,4 +1,5 @@
 ﻿Imports System.Xml
+Imports System.IO
 
 Public Class generarRetencionXML
     Public Sub generaRetencionXML(docEntry As String, Tipo As String, ByVal SBO_Application As SAPbouiCOM.Application, ByVal oCompany As SAPbobsCOM.Company)
@@ -140,6 +141,8 @@ Public Class generarRetencionXML
             ' Else
             ' AgregarNodo(docEntry, Tipo, SBO_Application, oCompany, ruta)
             '   End If
+
+           
         Catch ex As Exception
             SBO_Application.SetStatusBarMessage(ex.Message, SAPbouiCOM.BoMessageTime.bmt_Medium, True)
         End Try
@@ -151,7 +154,7 @@ Public Class generarRetencionXML
         writer.WriteEndElement()
     End Sub
 
-  
+
 
     Private Sub AgregarNodo(docEntry As String, Tipo As String, SBO_Application As SAPbouiCOM.Application, oCompany As SAPbobsCOM.Company, url As String)
         Try
@@ -259,8 +262,19 @@ Public Class generarRetencionXML
                 writer.WriteEndElement()
                 writer.WriteEndDocument()
                 writer.Close()
+                If Directory.Exists("C:\OS_FE") = False Then
+                    Directory.CreateDirectory("C:\OS_FE")
+                End If
+                Dim esta = Application.StartupPath & "\Comprobante (RC) No." & DocEntry.ToString & ".xml"
+                Dim va = "C:\OS_FE\Comprobante (RC) No." & DocEntry.ToString & ".xml"
+                If File.Exists(va) Then
+                    File.Delete(va)
+                    File.Move(esta, va)
+                Else
+                    File.Move(esta, va)
+                End If
             End If
-           
+
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try

@@ -1,4 +1,5 @@
 ﻿Imports System.Xml
+Imports System.IO
 
 Public Class generarGRXML
     Public Sub generarXML(DocEntry As String, objectType As String, oCompany As SAPbobsCOM.Company, SBO As SAPbouiCOM.Application)
@@ -121,7 +122,17 @@ Public Class generarGRXML
             System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecord)
             oRecord = Nothing
             GC.Collect()
-
+            If Directory.Exists("C:\OS_FE") = False Then
+                Directory.CreateDirectory("C:\OS_FE")
+            End If
+            Dim esta = Application.StartupPath & "\Comprobante (FR) No." & DocEntry.ToString & ".xml"
+            Dim va = "C:\OS_FE\Comprobante (GR) No." & DocEntry.ToString & ".xml"
+            If File.Exists(va) Then
+                File.Delete(va)
+                File.Move(esta, va)
+            Else
+                File.Move(esta, va)
+            End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try

@@ -12,6 +12,7 @@
             Me.SBO_Application = UDT_UF.SBOApplication
             Me.oCompany = UDT_UF.Company
             Dim oDigital As SAPbouiCOM.CheckBox
+            Dim oXml As SAPbouiCOM.CheckBox
             If UDT_UF.ActivateFormIsOpen(SBO_Application, "frS") = False Then
                 LoadFromXML(XmlForm)
                 oForm = SBO_Application.Forms.Item("frS")
@@ -41,6 +42,7 @@
                 oNoAutori = oForm.Items.Item("Item_13").Specific
                 oCaducidad = oForm.Items.Item("Item_15").Specific
                 oDigital = oForm.Items.Item("Item_25").Specific
+                oXml = oForm.Items.Item("Item_26").Specific
                 oEstable.DataBind.SetBound(True, "", "Date")
                 oPunto.DataBind.SetBound(True, "", "Date2")
                 oHastaI.DataBind.SetBound(True, "", "Hasta")
@@ -50,9 +52,13 @@
                 oCombo.ValidValues.Add("01", "Electrónico")
                 oCombo.ValidValues.Add("02", "Impreso")
                 oForm.DataSources.UserDataSources.Add("ChkPor", SAPbouiCOM.BoDataType.dt_SHORT_TEXT, 1)
+                oForm.DataSources.UserDataSources.Add("ChkPor1", SAPbouiCOM.BoDataType.dt_SHORT_TEXT, 1)
                 oDigital = oForm.Items.Item("Item_25").Specific
+                oXml = oForm.Items.Item("Item_26").Specific
                 oDigital.DataBind.SetBound(True, "", "ChkPor")
                 oForm.DataSources.UserDataSources.Item("ChkPor").Value = "N"
+                oXml.DataBind.SetBound(True, "", "ChkPor1")
+                oForm.DataSources.UserDataSources.Item("ChkPor1").Value = "N"
             Else
                 oForm = Me.SBO_Application.Forms.Item("frS")
             End If
@@ -107,6 +113,7 @@
                     Dim oCiudad As SAPbouiCOM.EditText
                     Dim oTelefono As SAPbouiCOM.EditText
                     Dim oDigital As SAPbouiCOM.CheckBox
+                    Dim oXML As SAPbouiCOM.CheckBox
                     oSerie = oForm.Items.Item("Item_24").Specific
                     oNoAutori = oForm.Items.Item("Item_13").Specific
                     oCaducidad = oForm.Items.Item("Item_15").Specific
@@ -114,6 +121,7 @@
                     oCiudad = oForm.Items.Item("Item_21").Specific
                     oTelefono = oForm.Items.Item("Item_23").Specific
                     oDigital = oForm.Items.Item("Item_25").Specific
+                    oXML = oForm.Items.Item("Item_26").Specific
 
                     If obutton.Caption.Equals("Agregar") Then
                         Dim sql As String = ""
@@ -126,7 +134,7 @@
                         End If
 
 
-                        sql = "EXEC SERIES_PTO_ESTABLE '1','" & oSerie.Value.Trim & "','" & oNoAutori.Value & "','" & oCaducidad.Value & "','" & oDire.Value & "','" & oCiudad.Value & "','" & oTelefono.Value.Trim & "','" & IIf(oDigital.Checked = True, "Y", "N") & "'"
+                        sql = "EXEC SERIES_PTO_ESTABLE '1','" & oSerie.Value.Trim & "','" & oNoAutori.Value & "','" & oCaducidad.Value & "','" & oDire.Value & "','" & oCiudad.Value & "','" & oTelefono.Value.Trim & "','" & IIf(oDigital.Checked = True, "Y", "N") & "','" & IIf(oXML.Checked = True, "Y", "N") & "'"
                         Dim orecord As SAPbobsCOM.Recordset
                         orecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
 
@@ -151,7 +159,7 @@
                                 Dim orecord As SAPbobsCOM.Recordset
                                 Dim Sql As String
                                 orecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-                                Sql = "EXEC SERIES_PTO_ESTABLE '3','" & code & "','" & oNoAutori.Value & "','" & oCaducidad.Value & "','" & oDire.Value & "','" & oCiudad.Value & "','" & oTelefono.Value.Trim & "',''"
+                                Sql = "EXEC SERIES_PTO_ESTABLE '3','" & code & "','" & oNoAutori.Value & "','" & oCaducidad.Value & "','" & oDire.Value & "','" & oCiudad.Value & "','" & oTelefono.Value.Trim & "','',''"
                                 orecord.DoQuery(Sql)
                                 carcarSeries()
                                 seriesImpresas()
@@ -200,7 +208,7 @@
             Dim gridView As SAPbouiCOM.Grid
             gridView = oForm.Items.Item("Item_0").Specific
             gridView.SelectionMode = SAPbouiCOM.BoMatrixSelect.ms_Single
-            Dim sql As String = "EXEC [SERIES_PTO_ESTABLE] '2','','','','','','',''"
+            Dim sql As String = "EXEC [SERIES_PTO_ESTABLE] '2','','','','','','','',''"
             oForm.DataSources.DataTables.Item(0).ExecuteQuery(sql)
             gridView.DataTable = oForm.DataSources.DataTables.Item("MyDataTable")
             gridView.AutoResizeColumns()
@@ -213,6 +221,7 @@
             gridView.Columns.Item(6).Editable = False
             gridView.Columns.Item(7).Editable = False
             gridView.Columns.Item(8).Editable = False
+            gridView.Columns.Item(9).Editable = False
             System.Runtime.InteropServices.Marshal.ReleaseComObject(gridView)
             gridView = Nothing
             GC.Collect()
@@ -236,6 +245,7 @@
             Dim oCiudad As SAPbouiCOM.EditText
             Dim oTelefono As SAPbouiCOM.EditText
             Dim oDigital As SAPbouiCOM.CheckBox
+            Dim oxml As SAPbouiCOM.CheckBox
             oDe = oForm.Items.Item("Item_2").Specific
             oHasta = oForm.Items.Item("Item_4").Specific
             oCombo = oForm.Items.Item("Item_8").Specific
@@ -248,8 +258,11 @@
             oCiudad = oForm.Items.Item("Item_21").Specific
             oTelefono = oForm.Items.Item("Item_23").Specific
             oDigital = oForm.Items.Item("Item_25").Specific
+            oxml = oForm.Items.Item("Item_26").Specific
             oForm.DataSources.UserDataSources.Item("ChkPor").Value = "N"
+            oForm.DataSources.UserDataSources.Item("ChkPor1").Value = "N"
             oDigital.Checked = True
+            oxml.Checked = True
             oDe.Value = ""
             oHasta.Value = ""
             oCombo.Select(0, SAPbouiCOM.BoSearchKey.psk_Index)

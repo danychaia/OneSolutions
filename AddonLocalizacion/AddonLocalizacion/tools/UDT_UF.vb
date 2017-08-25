@@ -1,4 +1,5 @@
 ﻿Module UDT_UF
+    Public control As Integer = 0
     Private _SBOApplication As SAPbouiCOM.Application
     Public Property SBOApplication() As SAPbouiCOM.Application
         Get
@@ -30,7 +31,7 @@
         Dim err As String = ""
         Dim num As Integer = 0
         Dim row As Integer = -1
-        
+
         Try
             If fieldExist(oCompany, tableName, namefield) = False Then
                 Dim oUserFieldsMD As SAPbobsCOM.UserFieldsMD

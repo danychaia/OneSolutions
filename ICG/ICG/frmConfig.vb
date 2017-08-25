@@ -13,6 +13,10 @@ Public Class frmConfig
                 txtuser.Text = Lista(2).ToString
                 txtContra.Text = Lista(3).ToString
                 txtHora.Text = Lista(4).ToString
+                txtbSap.Text = Lista(5).ToString
+                txtUsrSAp.Text = Lista(6).ToString
+                txtContraSap.Text = Lista(7).ToString
+
             Catch ex As Exception
 
             End Try
@@ -43,6 +47,10 @@ Public Class frmConfig
             Lista.Add(txtuser.Text)
             Lista.Add(txtContra.Text)
             Lista.Add(txtHora.Text)
+            Lista.Add(txtbSap.Text)
+            Lista.Add(txtUsrSAp.Text)
+            Lista.Add(txtContraSap.Text)
+
             Nodo = Doc.CreateElement("CONFIGURACION")
             Doc.AppendChild(Nodo)
 

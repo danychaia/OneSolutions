@@ -1,4 +1,5 @@
 ﻿Imports System.Xml
+Imports System.IO
 
 Public Class generarFXML
     Public Sub generarXML(DocEntry As String, objectType As String, oCompany As SAPbobsCOM.Company, SBO As SAPbouiCOM.Application)
@@ -44,7 +45,7 @@ Public Class generarFXML
             createNode("dirEstablecimiento", direccion, writer)
             If oContriEspecial <> "" Then
                 createNode("contribuyenteEspecial", oContriEspecial, writer)
-            End If           
+            End If
             createNode("obligadoContabilidad", oObliconta, writer)
             createNode("tipoIdentificacionComprador", oRecord.Fields.Item("U_IDENTIFICACION").Value.ToString, writer)
             'createNode("guiaRemision", "", writer)
@@ -156,7 +157,18 @@ Public Class generarFXML
             ''Cierre Factura
             writer.WriteEndElement()
             writer.WriteEndDocument()
-            writer.Close()            
+            writer.Close()
+            If Directory.Exists("C:\OS_FE") = False Then
+                Directory.CreateDirectory("C:\OS_FE")
+            End If
+            Dim esta = Application.StartupPath & "\Comprobante (F) No." & DocEntry.ToString & ".xml"
+            Dim va = "C:\OS_FE\Comprobante (F) No." & DocEntry.ToString & ".xml"
+            If File.Exists(va) Then
+                File.Delete(va)
+                File.Move(esta, va)
+            Else
+                File.Move(esta, va)
+            End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try

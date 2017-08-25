@@ -66,7 +66,7 @@
     End Sub
 
     Private Sub SBO_Application_ItemEvent(ByVal FormUID As String, ByRef pVal As SAPbouiCOM.ItemEvent, ByRef BubbleEvent As Boolean) Handles SBO_Application.ItemEvent
-        If pVal.FormTypeEx = "60006" And pVal.Before_Action = True Then
+        If pVal.FormUID = "fRtn" And pVal.Before_Action = True Then
             If pVal.ItemUID = "btn1" And pVal.EventType = SAPbouiCOM.BoEventTypes.et_ITEM_PRESSED And pVal.Before_Action = True Then
                 Dim oDe As SAPbouiCOM.ComboBox
                 Dim oHasta As SAPbouiCOM.ComboBox

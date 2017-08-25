@@ -1,4 +1,5 @@
 ﻿Imports System.Xml
+Imports System.IO
 
 Public Class generarFEXML
     Public Sub generarXML(DocEntry As String, objectType As String, oCompany As SAPbobsCOM.Company, SBO As SAPbouiCOM.Application)
@@ -58,7 +59,7 @@ Public Class generarFEXML
             createNode("puertoEmbarque", oRecord.Fields.Item("U_PUERTO_EMBARGUE").Value, writer)
             createNode("puertoDestino", oRecord.Fields.Item("U_PUERTO_DESTINO").Value, writer)
             createNode("paisDestino", oRecord.Fields.Item("U_PAIS_DESTINO").Value, writer)
-            createNode("paisAdquisicion", oRecord.Fields.Item("U_PAIS_ADQUISION").Value, writer)           
+            createNode("paisAdquisicion", oRecord.Fields.Item("U_PAIS_ADQUISION").Value, writer)
             createNode("tipoIdentificacionComprador", oRecord.Fields.Item("U_IDENTIFICACION").Value, writer)
             ' createNode("guiaRemision", "", writer)
             createNode("razonSocialComprador", oRecord.Fields.Item("CardName").Value.ToString, writer)
@@ -179,6 +180,17 @@ Public Class generarFEXML
             writer.WriteEndElement()
             writer.WriteEndDocument()
             writer.Close()
+            If Directory.Exists("C:\OS_FE") = False Then
+                Directory.CreateDirectory("C:\OS_FE")
+            End If
+            Dim esta = Application.StartupPath & "\Comprobante (FE) No." & DocEntry.ToString & ".xml"
+            Dim va = "C:\OS_FE\Comprobante (FE) No." & DocEntry.ToString & ".xml"
+            If File.Exists(va) Then
+                File.Delete(va)
+                File.Move(esta, va)
+            Else
+                File.Move(esta, va)
+            End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try

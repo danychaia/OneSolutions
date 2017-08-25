@@ -1,10 +1,10 @@
 Comprobantes	OPCH	TI_COMPRO		
-1	Factura	TI_COMPRO	value
-2	Nota o boleta de venta	TI_COMPRO	value
-3	Liquidación de compra	TI_COMPRO	value
-5	Nota de débito	TI_COMPRO	value
-8	Boletos o entragas es espectaculos públicos	TI_COMPRO	value
-9	Tiket o vales emitidos por maquinas registradoras	TI_COMPRO	value
+01	Factura	TI_COMPRO	value
+02	Nota o boleta de venta	TI_COMPRO	value
+03	Liquidación de compra	TI_COMPRO	value
+05	Nota de débito	TI_COMPRO	value
+08	Boletos o entragas es espectaculos públicos	TI_COMPRO	value
+09	Tiket o vales emitidos por maquinas registradoras	TI_COMPRO	value
 11	Pasajes expedidos por empresas de aviación	TI_COMPRO	value
 12	Dtos emitidos por instituciones financieras	TI_COMPRO	value
 15	Comprobante de venta emitido en el Exterior	TI_COMPRO	value
@@ -28,4 +28,4 @@ Comprobantes	OPCH	TI_COMPRO
 52	N/D A Inst. Estado y Empr. Públicas que percibe ingreso exento de Imp. Renta	TI_COMPRO	value
 99	No Procesar para Anexo Transaccional	TI_COMPRO	value
 294	Liquidación de Compra de Bienes Muebles Usados	TI_COMPRO	value
-4	Nota de crédito	TI_COMPRO	fin
+04	Nota de crédito	TI_COMPRO	fin

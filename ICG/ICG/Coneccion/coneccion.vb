@@ -15,7 +15,7 @@ Public Class coneccion
             Dim connectionString As String = "Server=" & Lista(0).ToString & ";Database=" & Lista(1).ToString & ";User Id=" & Lista(2).ToString & ";Password=" & Lista(3).ToString
             Using sqlCon = New SqlConnection(connectionString)
                 sqlCon.Open()
-                Dim sqlText = "select idsap,CodigoServicio,Total,Monto,CONVERT(VARCHAR(10), Fecha, 101),porcentaje,id_cgdesa from Datos where estado = 0 "
+                Dim sqlText = "select idsap,CodigoServicio,Total,Monto,CONVERT(VARCHAR(10), Fecha, 101),porcentaje,id_cgdesa from Datos where estado = 0 order by idsap, fecha asc"
                 Dim cmd = New SqlCommand(sqlText, sqlCon)
 
                 Dim reader As SqlDataReader = cmd.ExecuteReader()
@@ -31,28 +31,46 @@ Public Class coneccion
                     writer.WriteStartElement("document")
                     createNode("series", "", writer)
                     'createNode("docnum", reader(1).ToString, writer
-                    'createNode("docdate", Date.Parse(reader(4).ToString).ToString("yyyMMdd"), writer)
-                    createNode("docdate", reader(4).ToString, writer)
+                    'createNode("docdate", Date.Now.ToShortDateString, writer)
+                    createNode("docdate", Date.Parse(reader(4).ToString).ToString("yyyMMdd"), writer)
+                    'createNode("docdate", reader(4).ToString, writer)
                     createNode("doctotal", reader(3).ToString, writer)
-                    createNode("cardcode", reader(0).ToString, writer)
+                    createNode("cardcode", reader(0).ToString.Trim, writer)
                     createNode("doctype", "I", writer)
+                    createNode("descuento", reader(5).ToString, writer)
+
 
                     'cmd = Nothing
-                    'sqlText = "select b.ItemCode,b.Quantity,b.TaxCode, b.LineTotal from inv1 b  where b.DocEntry =" & reader(6).ToString
-                    'Dim sqlcon2 As New SqlConnection(connectionString)
-                    'sqlcon2.Open()
-                    'cmd = New SqlCommand(sqlText, sqlcon2)
-                    'Dim reader2 As SqlDataReader = cmd.ExecuteReader()
+                    sqlText = "SELECT * FROM Tipo_servicio where codigo ='" & reader(1).ToString.Trim & "' and tipo = 1 "
+                    Dim sqlcon2 As New SqlConnection(connectionString)
+                    sqlcon2.Open()
+                    cmd = New SqlCommand(sqlText, sqlcon2)
+                    Dim reader2 As SqlDataReader = cmd.ExecuteReader()
                     writer.WriteStartElement("document_lines")
                     'While reader2.Read()
-                    writer.WriteStartElement("line")
-                    createNode("itemcode", reader(1).ToString, writer)
-                    createNode("quantity", reader(2).ToString, writer)
-                    createNode("taxcode", "IVA", writer)
-                    createNode("linetotal", reader(3).ToString, writer)
-                    writer.WriteEndElement()
+                    If reader2.Read = True Then
+                        writer.WriteStartElement("line")
+                        createNode("itemcode", reader(1).ToString.Trim, writer)
+                        createNode("quantity", "1", writer)
+                        createNode("taxcode", "IVA", writer)
+                        createNode("linetotal", "0.00", writer)
+                        createNode("price", reader(3).ToString, writer)
+                        createNode("descuento", reader(5).ToString, writer)
+                        writer.WriteEndElement()
+
+                    Else
+                        writer.WriteStartElement("line")
+                        createNode("itemcode", reader(1).ToString.Trim, writer)
+                        createNode("quantity", reader(2).ToString, writer)
+                        createNode("taxcode", "IVA", writer)
+                        createNode("linetotal", "0.00", writer)
+                        createNode("price", "0.00", writer)
+                        createNode("descuento", reader(5).ToString, writer)
+                        writer.WriteEndElement()
+                    End If
+
                     ' End While
-                    'sqlcon2.Close()
+                    sqlcon2.Close()
                     'fin document line
                     writer.WriteEndElement()
 
@@ -65,7 +83,16 @@ Public Class coneccion
                     'File.Move(System.IO.File.ReadAllText(Application.StartupPath & "\" & "Orden (O) No." & reader(1).ToString & ".xml"), System.IO.File.ReadAllText(Application.StartupPath & "\xml"))
                     Dim p = Application.StartupPath & "\" & "Orden (O) No." & reader(6).ToString & ".xml"
                     Dim o = Application.StartupPath & "\xml\ Orden (O) No." & reader(6).ToString & ".xml"
+                    If File.Exists(o) Then
+                        File.Delete(o)
+                    End If
                     File.Move(p, o)
+                    sqlText = "UPDATE DATOS SET estado = 1 WHERE  id_cgdesa =" & reader(6).ToString
+                    sqlcon2 = New SqlConnection(connectionString)
+                    sqlcon2.Open()
+                    cmd = New SqlCommand(sqlText, sqlcon2)
+                    Dim a = cmd.ExecuteNonQuery()
+                    sqlcon2.Close()
                 End While
                 sqlCon.Close()
             End Using

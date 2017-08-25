@@ -863,7 +863,7 @@ Public Class localizacion
                 Dim docEntrynode = doc.DocumentElement.SelectSingleNode("/DocumentParams/DocEntry")
                 Dim oRecord As SAPbobsCOM.Recordset
                 oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-                oRecord.DoQuery("exec ACTUALIZANOTACREDITOPROVEEDORES " & docEntrynode.InnerText & "")
+                oRecord.DoQuery("exec ACTUALIZANOTACREDITOPROVEEDORES '" & docEntrynode.InnerText & "'")
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecord)
                 oRecord = Nothing
                 GC.Collect()
@@ -942,6 +942,7 @@ Public Class localizacion
         If (pVal.MenuUID = "rete") And (pVal.BeforeAction = False) Then
             Dim oATS As New generar_ATS
             BubbleEvent = False
+            Return
         End If
         If (pVal.MenuUID = "rinfo") And (pVal.BeforeAction = False) Then
             Dim info_retencion As New retencion_info
@@ -1126,20 +1127,21 @@ Public Class localizacion
             UDT_UF.userField(oCompany, "@SERIES", "CIUDAD", 70, "CIUDAD", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
             UDT_UF.userField(oCompany, "@SERIES", "TELEFONO", 70, "TELEFONO", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
             UDT_UF.userField(oCompany, "@SERIES", "DIGITAL", 10, "DIGITAL", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
+            UDT_UF.userField(oCompany, "@SERIES", "XML", 3, "XML", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
 
 
 
 
             UDT_UF.userField(oCompany, "OWHT", "CODIGO ATS", 45, "COD_ATS", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
 
-            UDT_UF.userField(oCompany, "OPCH", "Sustento Tributario", 60, "SUS_TRIBU", SAPbobsCOM.BoFieldTypes.db_Alpha, True, SBOApplication)
-            UDT_UF.userField(oCompany, "OPCH", "Tipo de Comprobante", 45, "TI_COMPRO", SAPbobsCOM.BoFieldTypes.db_Alpha, True, SBOApplication)
-            UDT_UF.userField(oCompany, "OINV", "Forma de Pago", 60, "FORMA_PAGO", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
+            UDT_UF.userField(oCompany, "OPCH", "Sustento Tributario", 3, "SUS_TRIBU", SAPbobsCOM.BoFieldTypes.db_Alpha, True, SBOApplication)
+            UDT_UF.userField(oCompany, "OPCH", "Tipo de Comprobante", 3, "TI_COMPRO", SAPbobsCOM.BoFieldTypes.db_Alpha, True, SBOApplication)
+            UDT_UF.userField(oCompany, "OINV", "Forma de Pago", 4, "FORMA_PAGO", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
             UDT_UF.userField(oCompany, "OINV", "Número de Autorización", 60, "NO_AUTORI", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
             UDT_UF.userField(oCompany, "OPCH", "Número de Retención", 45, "RETENCION_NO", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
             UDT_UF.userField(oCompany, "OPCH", "Número de autorizacion Retencion", 60, "NA_RETENCION", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
             UDT_UF.userField(oCompany, "OPCH", "Fecha de Retención", 60, "F_RETENCION", SAPbobsCOM.BoFieldTypes.db_Date, False, SBOApplication)
-            UDT_UF.userField(oCompany, "OPCH", "Aplicar Retención", 6, "A_APLICARR", SAPbobsCOM.BoFieldTypes.db_Alpha, True, SBOApplication)
+            UDT_UF.userField(oCompany, "OPCH", "Aplicar Retención", 4, "A_APLICARR", SAPbobsCOM.BoFieldTypes.db_Alpha, True, SBOApplication)
             ' Notas de crédito y de debtito
             UDT_UF.userField(oCompany, "OPCH", "Doc. Modificado", 45, "D_MODIFICADO", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
             UDT_UF.userField(oCompany, "OPCH", "Fecha Doc. Modificado", 45, "F_MODIFICADO", SAPbobsCOM.BoFieldTypes.db_Date, False, SBOApplication)
@@ -2044,7 +2046,7 @@ Public Class localizacion
             oValid = Nothing
             oValid = New validValues
             oValid.value = "01"
-            oValid.descrip = "EXPORTACION DE BINES CON REFRENDO"
+            oValid.descrip = "Exportacion De Bienes Con Refrendo"
             validArray.Add(oValid)
 
             oValid = Nothing

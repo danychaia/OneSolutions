@@ -1,4 +1,5 @@
 ﻿Imports System.Xml
+Imports System.IO
 
 Public Class generarNDXML
     Public Sub generarXML(DocEntry As String, objectType As String, oCompany As SAPbobsCOM.Company, SBO As SAPbouiCOM.Application)
@@ -49,7 +50,7 @@ Public Class generarNDXML
         createNode("numDocModificado", oRecord.Fields.Item("DocModifi").Value, writer)
         createNode("fechaEmisionDocSustento", oRecord.Fields.Item("FechaModifi").Value, writer)
         createNode("totalSinImpuestos", oRecord.Fields.Item("sin_impuesto").Value.ToString, writer)
-       
+
         Dim importeTotal = oRecord.Fields.Item("DocTotal").Value.ToString
         Dim moneda = oRecord.Fields.Item("MONEDA").Value.ToString
         Dim motivo = oRecord.Fields.Item("Comments").Value.ToString
@@ -74,7 +75,7 @@ Public Class generarNDXML
             writer.WriteEndElement()
         End If
         createNode("valorTotal", importeTotal, writer)
-        
+
 
         ''Cierre infoNotaDebito
         writer.WriteEndElement()
@@ -87,7 +88,17 @@ Public Class generarNDXML
         ''Cierre Nota de Débito
         writer.WriteEndElement()
         writer.Close()
-
+        If Directory.Exists("C:\OS_FE") = False Then
+            Directory.CreateDirectory("C:\OS_FE")
+        End If
+        Dim esta = Application.StartupPath & "\Comprobante (ND) No." & DocEntry.ToString & ".xml"
+        Dim va = "C:\OS_FE\Comprobante (ND) No." & DocEntry.ToString & ".xml"
+        If File.Exists(va) Then
+            File.Delete(va)
+            File.Move(esta, va)
+        Else
+            File.Move(esta, va)
+        End If
     End Sub
 
     Private Sub createNode(ByVal pID As String, ByVal pName As String, ByVal writer As XmlTextWriter)
