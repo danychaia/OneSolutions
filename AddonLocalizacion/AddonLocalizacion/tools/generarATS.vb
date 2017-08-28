@@ -306,6 +306,9 @@ Public Class generarATS
 
         writer.WriteStartElement("pagoExterior")
         createNode("pagoLocExt", oRecord.Fields.Item("pagoLocExt").Value, writer)
+        If oRecord.Fields.Item("pagoLocExt").Value = "02" Then
+            createNode("tipoRegi", oRecord.Fields.Item("tipoRegi").Value, writer)
+        End If
         createNode("paisEfecPago", oRecord.Fields.Item("paisEfecPago").Value, writer)
         createNode("aplicConvDobTrib", oRecord.Fields.Item("aplicConvDobTrib").Value, writer)
         createNode("pagExtSujRetNorLeg", oRecord.Fields.Item("pagExtSujRetNorLeg").Value, writer)
@@ -343,13 +346,48 @@ Public Class generarATS
             System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecordP)
             oRecordP = Nothing
             GC.Collect()
-            createNode("estabRetencion1", oRecord.Fields.Item("estabRetencion1").Value, writer)
-            createNode("ptoEmiRetencion1", oRecord.Fields.Item("ptoEmiRetencion1").Value, writer)
-            createNode("secRetencion1", oRecord.Fields.Item("secRetencion1").Value, writer)
-            createNode("autRetencion1", oRecord.Fields.Item("autRetencion1").Value, writer)
-            createNode("fechaEmiRet1", oRecord.Fields.Item("fechaEmiRet1").Value, writer)
+            If oRecord.Fields.Item("tipoComprobante").Value <> "41" Then
+                createNode("estabRetencion1", oRecord.Fields.Item("estabRetencion1").Value, writer)
+                createNode("ptoEmiRetencion1", oRecord.Fields.Item("ptoEmiRetencion1").Value, writer)
+                createNode("secRetencion1", oRecord.Fields.Item("secRetencion1").Value, writer)
+                createNode("autRetencion1", oRecord.Fields.Item("autRetencion1").Value, writer)
+                createNode("fechaEmiRet1", oRecord.Fields.Item("fechaEmiRet1").Value, writer)
+            Else
+                oRecordP = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
+                oRecordP.DoQuery("EXEC ATS_Reembolso " & oRecord.Fields.Item("DocEntry").Value)
+                If oRecordP.RecordCount > 0 Then
+                    writer.WriteStartElement("reembolsos")
+                    While oRecordP.EoF = False
+                        writer.WriteStartElement("reembolso")
+                        createNode("tipoComprobanteReemb", oRecordP.Fields.Item("tipoComprobanteReemb").Value, writer)
+                        createNode("tpIdProvReemb", oRecordP.Fields.Item("tpIdProvReemb").Value, writer)
+                        createNode("idProvReemb", oRecordP.Fields.Item("idProvReemb").Value, writer)
+                        createNode("establecimientoReemb", oRecordP.Fields.Item("establecimientoReemb").Value, writer)
+                        createNode("puntoEmisionReemb", oRecordP.Fields.Item("puntoEmisionReemb").Value, writer)
+                        createNode("secuencialReemb", oRecordP.Fields.Item("secuencialReemb").Value, writer)
+                        createNode("fechaEmisionReemb", oRecordP.Fields.Item("fechaEmisionReemb").Value, writer)
+                        createNode("autorizacionReemb", oRecordP.Fields.Item("autorizacionReemb").Value, writer)
+                        createNode("baseImponibleReemb", oRecordP.Fields.Item("baseImponibleReemb").Value, writer)
+                        createNode("baseImpGravReemb", oRecordP.Fields.Item("baseImpGravReemb").Value, writer)
+                        createNode("baseNoGraIvaReemb", oRecordP.Fields.Item("baseNoGraIvaReemb").Value, writer)
+                        createNode("baseImpExeReemb", oRecordP.Fields.Item("baseImpExeReemb").Value, writer)
+                        createNode("montoIceRemb", oRecordP.Fields.Item("montoIceRemb").Value, writer)
+                        createNode("montoIvaRemb", oRecordP.Fields.Item("montoIvaRemb").Value, writer)
+                        'FIN REEMBOLSO
+                        writer.WriteEndElement()
+                        oRecordP.MoveNext()
+                    End While
+                End If
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecordP)
+                oRecordP = Nothing
+                GC.Collect()
+
+                'FIN REEMBOLSOS
+                writer.WriteEndElement()
+            End If
+            
         End If
-        
+
     End Sub
 
     Private Sub detalleExportaciones(oRecord As SAPbobsCOM.Recordset, oCompany As SAPbobsCOM.Company, application As SAPbouiCOM.Application, writer As XmlTextWriter, ano As String, mes As String)

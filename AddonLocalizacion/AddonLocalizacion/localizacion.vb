@@ -1,5 +1,6 @@
 ﻿Imports System.Xml
 Imports System.Data.OleDb
+Imports System.IO
 
 'DANIEL MORENO
 'ADDON LOCALIZACION ECUADOR
@@ -200,6 +201,12 @@ Public Class localizacion
                 cargarInicial(oCompany, SBO_Application)
             End If
             SBOApplication.StatusBar.SetText("AddOn de LOCALIZACIÓN iniciado...", SAPbouiCOM.BoMessageTime.bmt_Short, SAPbouiCOM.BoStatusBarMessageType.smt_Success)
+            If Directory.Exists("C:\OS_ATS\") = False Then
+                Directory.CreateDirectory("C:\OS_ATS\")
+            End If
+            If Directory.Exists("C:\OS_FE\") = False Then
+                Directory.CreateDirectory("C:\OS_FE\")
+            End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
@@ -259,7 +266,7 @@ Public Class localizacion
             oCreationPackage.UniqueID = "pCli"
             oCreationPackage.String = "Retenciones en Venta"
             oMenus.AddEx(oCreationPackage)
-          
+
             oCreationPackage.Type = SAPbouiCOM.BoMenuType.mt_POPUP
             oCreationPackage.UniqueID = "CRtn"
             oCreationPackage.Position = "2"
@@ -337,7 +344,7 @@ Public Class localizacion
 
             oMenuItem = SBO_Application.Menus.Item("Mta")
             oMenus = oMenuItem.SubMenus
-            
+
 
             oCreationPackage.Type = SAPbouiCOM.BoMenuType.mt_STRING
             oCreationPackage.UniqueID = "ss"
@@ -412,7 +419,7 @@ Public Class localizacion
         oFilter.AddEx("-179")
         oFilter.AddEx("170")
         oFilter.AddEx("GREMISION")
-        oFilter.AddEx("65307")        
+        oFilter.AddEx("65307")
         'oFilter.AddEx("139") 'Orders Form
         'oFilter.AddEx("133") 'Invoice Form
         'oFilter.AddEx("169") 'Main Menu
@@ -425,7 +432,7 @@ Public Class localizacion
 
         Try
             If pVal.FormMode = SAPbouiCOM.BoFormMode.fm_ADD_MODE Or pVal.FormMode = SAPbouiCOM.BoFormMode.fm_UPDATE_MODE Then
-               
+
                 If pVal.FormTypeEx = "134" And pVal.Before_Action = True And pVal.ItemUID = "1" Then
                     If pVal.EventType = SAPbouiCOM.BoEventTypes.et_ITEM_PRESSED Then
                         Dim oform = SBO_Application.Forms.Item(pVal.FormUID)
@@ -786,7 +793,7 @@ Public Class localizacion
                 Dim xmlReembolso As New generarFRXML
                 xmlReembolso.generarXML(docEntrynode.InnerText, "FR", oCompany, SBOApplication)
             End If
-            If pVal.FormTypeEx = "133" And pVal.BeforeAction = False And pVal.ActionSuccess = True Then               
+            If pVal.FormTypeEx = "133" And pVal.BeforeAction = False And pVal.ActionSuccess = True Then
                 Dim doc As New XmlDocument
                 doc.LoadXml(pVal.ObjectKey)
                 Dim docEntrynode = doc.DocumentElement.SelectSingleNode("/DocumentParams/DocEntry")
@@ -933,8 +940,6 @@ Public Class localizacion
             BubbleEvent = False
         End If
 
-
-
         If (pVal.MenuUID = "infTri") And (pVal.BeforeAction = False) Then
             Dim inf As New inf_tributaria
             BubbleEvent = False
@@ -1005,7 +1010,7 @@ Public Class localizacion
             UDT_UF.userField(oCompany, "@INF_APP", "VERSION", 12, "VERSION", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
             UDT_UF.userField(oCompany, "@INF_APP", "FECHA", 12, "FECHA", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
             UDT_UF.userField(oCompany, "@INF_APP", "STATUS", 12, "STATUS", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
-           
+
 
             UDT_UF.userTable(oCompany, "MUNI_CANTO", "CANTON O MUNICIPIO", 45, "NULL", SAPbobsCOM.BoUTBTableType.bott_NoObject, False, SBOApplication)
             UDT_UF.userTable(oCompany, "PARROQUIAS", "PARROQUIAS", 45, "NULL", SAPbobsCOM.BoUTBTableType.bott_NoObject, False, SBOApplication)
@@ -1185,6 +1190,8 @@ Public Class localizacion
             UDT_UF.userField(oCompany, "OPCH", "Precio Caja Banano", 4, "PC_BANANO", SAPbobsCOM.BoFieldTypes.db_Float, False, SBOApplication)
 
             'CAMPOS PARA FACTURA DE REEEMBOLSO
+            UDT_UF.userField(oCompany, "PCH1", "Tipo Proveedor ", 13, "T_PROVEEDOR", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
+            UDT_UF.userField(oCompany, "PCH1", "Pais Proveedor", 13, "PA_PROVEEDOR", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
             UDT_UF.userField(oCompany, "PCH1", "Tipo de Identificación  ", 13, "T_IDENTIFICACION", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
             UDT_UF.userField(oCompany, "PCH1", "Número de Identificación", 13, "N_RUC", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
             UDT_UF.userField(oCompany, "PCH1", "Nombre de Proveedor ", 60, "N_PROVEEDOR", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
@@ -1202,9 +1209,8 @@ Public Class localizacion
             UDT_UF.userField(oCompany, "PCH1", "Monto ICE ", 11, "MONTO_ICE", SAPbobsCOM.BoFieldTypes.db_Float, False, SBOApplication)
             UDT_UF.userField(oCompany, "PCH1", "Motivo", 60, "MOTIVO", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
             UDT_UF.userField(oCompany, "PCH1", "Guia de Proveedor", 11, "GUIA_PROVEEDOR", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
-            UDT_UF.userField(oCompany, "PCH1", "TIPO PROVEEDOR ", 13, "T_PROVEEDOR", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
-            UDT_UF.userField(oCompany, "PCH1", "PAIS PROVEEDOR", 13, "PA_PROVEEDOR", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
-            UDT_UF.userField(oCompany, "PCH1", "ID PROVEEDOR REEMBOLSO ", 13, "ID_PROVEEDOR", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
+
+            'UDT_UF.userField(oCompany, "PCH1", "ID PROVEEDOR REEMBOLSO ", 13, "ID_PROVEEDOR", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
             UDT_UF.userField(oCompany, "OACT", "RUC de Banco  ", 13, "RUC_BANCO ", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
             UDT_UF.userField(oCompany, "OACT", "Cuenta  de Retención", 13, "CUENTA_RET ", SAPbobsCOM.BoFieldTypes.db_Alpha, True, SBOApplication)
             UDT_UF.userField(oCompany, "OJDT", "Aplica para ATS ", 13, "APLICA_ATS", SAPbobsCOM.BoFieldTypes.db_Alpha, True, SBOApplication)
@@ -1684,7 +1690,7 @@ Public Class localizacion
                 Catch ex As Exception
                     MessageBox.Show("linea  " & x)
                 End Try
-               
+
             End Using
 
 
@@ -1708,7 +1714,7 @@ Public Class localizacion
                     End While
                 Catch ex As Exception
                     MessageBox.Show("error " & xe & "   " & ex.Message)
-                End Try               
+                End Try
             End Using
             '--------------------------------------------
             Using fileReader As New FileIO.TextFieldParser(Application.StartupPath & "\ATS\IMPUESTO.txt")
@@ -2375,7 +2381,7 @@ Public Class localizacion
             findCols.Add("DocNum")
             UDT_UF.AddUDOForm(Me.oCompany, "CPEPOSFE", "CHEQUE POSFECHADO", "CPEPOSFE", SAPbobsCOM.BoUDOObjType.boud_Document, ChildTables, findCols)
 
-            ChildTables.Clear()            
+            ChildTables.Clear()
             findCols.Clear()
             findCols.Add("DocEntry")
             findCols.Add("DocNum")
@@ -2384,7 +2390,7 @@ Public Class localizacion
         Catch ex As Exception
 
         End Try
-        
+
     End Sub
 
     Private Function tipoFactura(p1 As String) As String
