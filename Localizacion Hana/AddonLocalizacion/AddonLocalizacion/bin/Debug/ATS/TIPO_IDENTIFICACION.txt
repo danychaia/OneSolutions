@@ -1,0 +1,5 @@
+TIPO DE IDENTIFICACION	
+R	RUC
+C	Cedula
+P	Pasaporte / Iidentificacion Tributario del Exterior
+F	Consumidor Final

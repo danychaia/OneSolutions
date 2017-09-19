@@ -1,0 +1,50 @@
+C:\Users\DANY\Desktop\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.exe.config
+C:\Users\DANY\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\Interop.SAPbobsCOM.dll
+C:\Users\DANY\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\Interop.SAPbouiCOM.dll
+C:\Users\DANY\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.vbproj.ResolveComReference.cache
+C:\Users\DANY\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.exe
+C:\Users\DANY\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.xml
+C:\Users\DANY\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.pdb
+C:\Users\DANY\Desktop\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.exe
+C:\Users\DANY\Desktop\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.pdb
+C:\Users\DANY\Desktop\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.xml
+C:\Users\DANY\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.Resources.resources
+C:\Users\DANY\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.vbproj.GenerateResource.Cache
+C:\Users\DANNY\documents\visual studio 2013\Projects\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.exe.config
+C:\Users\DANNY\documents\visual studio 2013\Projects\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.exe
+C:\Users\DANNY\documents\visual studio 2013\Projects\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.pdb
+C:\Users\DANNY\documents\visual studio 2013\Projects\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.xml
+C:\Users\DANNY\documents\visual studio 2013\Projects\AddonLocalizacion\AddonLocalizacion\obj\Debug\Interop.SAPbobsCOM.dll
+C:\Users\DANNY\documents\visual studio 2013\Projects\AddonLocalizacion\AddonLocalizacion\obj\Debug\Interop.SAPbouiCOM.dll
+C:\Users\DANNY\documents\visual studio 2013\Projects\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.vbproj.ResolveComReference.cache
+C:\Users\DANNY\documents\visual studio 2013\Projects\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.Resources.resources
+C:\Users\DANNY\documents\visual studio 2013\Projects\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.vbproj.GenerateResource.Cache
+C:\Users\DANNY\documents\visual studio 2013\Projects\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.exe
+C:\Users\DANNY\documents\visual studio 2013\Projects\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.xml
+C:\Users\DANNY\documents\visual studio 2013\Projects\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.pdb
+C:\Users\habab1\Desktop\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.exe.config
+C:\Users\habab1\Desktop\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.exe
+C:\Users\habab1\Desktop\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.pdb
+C:\Users\habab1\Desktop\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.xml
+C:\Users\habab1\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.vbprojResolveAssemblyReference.cache
+C:\Users\habab1\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\Interop.SAPbobsCOM.dll
+C:\Users\habab1\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\Interop.SAPbouiCOM.dll
+C:\Users\habab1\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.vbproj.ResolveComReference.cache
+C:\Users\habab1\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.Resources.resources
+C:\Users\habab1\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.vbproj.GenerateResource.Cache
+C:\Users\habab1\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.exe
+C:\Users\habab1\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.xml
+C:\Users\habab1\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.pdb
+C:\Users\habab1\Desktop\ESCRITORIO\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.exe.config
+C:\Users\habab1\Desktop\ESCRITORIO\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.exe
+C:\Users\habab1\Desktop\ESCRITORIO\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.pdb
+C:\Users\habab1\Desktop\ESCRITORIO\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.xml
+C:\Users\habab1\Desktop\ESCRITORIO\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.vbprojResolveAssemblyReference.cache
+C:\Users\habab1\Desktop\ESCRITORIO\AddonLocalizacion\AddonLocalizacion\obj\Debug\Interop.SAPbobsCOM.dll
+C:\Users\habab1\Desktop\ESCRITORIO\AddonLocalizacion\AddonLocalizacion\obj\Debug\Interop.SAPbouiCOM.dll
+C:\Users\habab1\Desktop\ESCRITORIO\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.vbproj.ResolveComReference.cache
+C:\Users\habab1\Desktop\ESCRITORIO\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.Resources.resources
+C:\Users\habab1\Desktop\ESCRITORIO\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.vbproj.GenerateResource.Cache
+C:\Users\habab1\Desktop\ESCRITORIO\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.exe
+C:\Users\habab1\Desktop\ESCRITORIO\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.xml
+C:\Users\habab1\Desktop\ESCRITORIO\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.pdb

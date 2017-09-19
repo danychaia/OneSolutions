@@ -1,0 +1,19 @@
+1	Fondos de Inversion 5.00	1	
+2	Fideicomiso Mercantil de Administracion	5.00	1	
+3	Fideicomiso Mercantil de Inversion	5.00	1	
+4	Fideicomiso Mercantil de Inmobiliario	5.00	1	
+5	Fideicomiso Mercantil de Garantias	5.00	1	
+12	Fideicomiso Mercantil de Titularizacion	5.00	1	
+6	Fideicomiso Mercantil de Inmobiliario	0.00	1	
+7	Fondos de Inversion	0.00	1	
+8	Fideicomiso Mercantil de Administracion	0.00	1	
+9	Fideicomiso Mercantil de Inversion	0.00	1	
+10	Fideicomiso Mercantil de Inmobiliario	0.00	1	
+11	Fideicomiso Mercantil de Garantias	0.00	1	
+13	Fideicomiso Mercantil de Titularizacion	0.00	1	
+14	Fideicomiso Mercantil de Titularizacion	0.00	1	
+15	Fideicomiso Mercantil de Inversion	0.00	1	
+16	Fideicomiso Mercantil de Administracion	0.00	1	
+17	Fondos de Inversion	0.00	1	
+18	Fideicomiso Mercantil de Garantias	0.00	1	
+19	Fondo Complementario	0.00	1	
