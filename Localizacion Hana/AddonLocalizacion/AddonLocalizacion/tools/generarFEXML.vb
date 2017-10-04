@@ -1,4 +1,5 @@
 ﻿Imports System.Xml
+Imports System.IO
 
 Public Class generarFEXML
     Public Sub generarXML(DocEntry As String, objectType As String, oCompany As SAPbobsCOM.Company, SBO As SAPbouiCOM.Application)
@@ -12,7 +13,7 @@ Public Class generarFEXML
             Dim gastosTransporteOtros As String
 
 
-            oRecord.DoQuery("exec ENCABEZADO_FACTURA '" & DocEntry & "','13E'")
+            oRecord.DoQuery("CALL ENCABEZADO_FACTURA ('" & DocEntry & "','13E')")
             Dim writer As New XmlTextWriter("Comprobante (FE) No." & DocEntry.ToString & ".xml", System.Text.Encoding.UTF8)
             writer.WriteStartDocument(True)
             writer.Formatting = Formatting.Indented
@@ -44,7 +45,7 @@ Public Class generarFEXML
 
             writer.WriteStartElement("infoFactura")
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-            oRecord.DoQuery("exec SP_INFO_FACTURA '" & DocEntry & "','13E'")
+            oRecord.DoQuery("CALL SP_INFO_FACTURA ('" & DocEntry & "','13E')")
             createNode("fechaEmision", Date.Parse(oRecord.Fields.Item("DATE").Value.ToString).ToString("dd/MM/yyyy"), writer)
             If contribuyenteEspecial <> "" Then
                 createNode("contribuyenteEspecial", contribuyenteEspecial, writer)
@@ -58,7 +59,7 @@ Public Class generarFEXML
             createNode("puertoEmbarque", oRecord.Fields.Item("U_PUERTO_EMBARGUE").Value, writer)
             createNode("puertoDestino", oRecord.Fields.Item("U_PUERTO_DESTINO").Value, writer)
             createNode("paisDestino", oRecord.Fields.Item("U_PAIS_DESTINO").Value, writer)
-            createNode("paisAdquisicion", oRecord.Fields.Item("U_PAIS_ADQUISION").Value, writer)           
+            createNode("paisAdquisicion", oRecord.Fields.Item("U_PAIS_ADQUISION").Value, writer)
             createNode("tipoIdentificacionComprador", oRecord.Fields.Item("U_IDENTIFICACION").Value, writer)
             ' createNode("guiaRemision", "", writer)
             createNode("razonSocialComprador", oRecord.Fields.Item("CardName").Value.ToString, writer)
@@ -79,7 +80,7 @@ Public Class generarFEXML
             GC.Collect()
 
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-            oRecord.DoQuery("exec SP_Total_Con_Impuesto '" & DocEntry & "','13'")
+            oRecord.DoQuery("CALL SP_Total_Con_Impuesto ('" & DocEntry & "','13')")
             If oRecord.RecordCount > 0 Then
                 While oRecord.EoF = False
                     writer.WriteStartElement("totalImpuesto")
@@ -108,7 +109,7 @@ Public Class generarFEXML
 
             writer.WriteStartElement("pagos")
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-            oRecord.DoQuery("exec SP_Forma_Pago '" & DocEntry & "','13'")
+            oRecord.DoQuery("CALL SP_Forma_Pago ('" & DocEntry & "','13')")
             If oRecord.RecordCount > 0 Then
                 While oRecord.EoF = False
                     writer.WriteStartElement("pago")
@@ -133,7 +134,7 @@ Public Class generarFEXML
 
             writer.WriteStartElement("detalles")
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-            oRecord.DoQuery("exec SP_DetalleFac '" & DocEntry & "','13'")
+            oRecord.DoQuery("CALL SP_DetalleFac ('" & DocEntry & "','13')")
 
 
             If oRecord.RecordCount > 0 Then
@@ -149,7 +150,7 @@ Public Class generarFEXML
                     createNode("descuento", oRecord.Fields.Item(4).Value.ToString, writer)
                     createNode("precioTotalSinImpuesto", oRecord.Fields.Item(5).Value.ToString, writer)
                     writer.WriteStartElement("impuestos")
-                    oRecord2.DoQuery("exec SP_Impuesto_Detalle '" & DocEntry & "','" & oRecord.Fields.Item(0).Value.ToString & "','13'")
+                    oRecord2.DoQuery("CALL SP_Impuesto_Detalle ('" & DocEntry & "','" & oRecord.Fields.Item(0).Value.ToString & "','13')")
                     If oRecord2.RecordCount > 0 Then
                         While oRecord2.EoF = False
                             writer.WriteStartElement("impuesto")
@@ -179,6 +180,17 @@ Public Class generarFEXML
             writer.WriteEndElement()
             writer.WriteEndDocument()
             writer.Close()
+            If Directory.Exists("C:\OS_FE") = False Then
+                Directory.CreateDirectory("C:\OS_FE")
+            End If
+            Dim esta = Application.StartupPath & "\Comprobante (FE) No." & DocEntry.ToString & ".xml"
+            Dim va = "C:\OS_FE\Comprobante (FE) No." & DocEntry.ToString & ".xml"
+            If File.Exists(va) Then
+                File.Delete(va)
+                File.Move(esta, va)
+            Else
+                File.Move(esta, va)
+            End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try

@@ -58,6 +58,22 @@
 
 
     End Sub
+    Private Sub SBO_Application_ItemEvent(ByVal FormUID As String, ByRef pVal As SAPbouiCOM.ItemEvent, ByRef BubbleEvent As Boolean) Handles SBO_Application.ItemEvent
+        Try
+
+            If oForm Is Nothing Then
+                Exit Sub
+            End If
+
+            If pVal.EventType = SAPbouiCOM.BoEventTypes.et_FORM_CLOSE And pVal.BeforeAction = True And pVal.FormUID = "T_GTRANSPORTISTA_" Then
+                oForm = Nothing
+                oCompany = Nothing
+                SBO_Application = Nothing
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
     Private Sub SBO_Application_MenuEvent(ByRef pVal As SAPbouiCOM.MenuEvent, ByRef BubbleEvent As Boolean) Handles SBO_Application.MenuEvent
         Try
             If pVal.MenuUID = "1282" And pVal.BeforeAction = False Then
@@ -68,6 +84,7 @@
             If pVal.MenuUID = "1292" And pVal.BeforeAction = False Then
                 oMatrix.AddRow(1)
                 oMatrix.SelectionMode = SAPbouiCOM.BoMatrixSelect.ms_Single
+                oMatrix.ClearRowData(oMatrix.RowCount - 1)
                 BubbleEvent = False
                 Return
             End If

@@ -1,4 +1,5 @@
 ﻿Imports System.Xml
+Imports System.IO
 
 Public Class generarGRXML
     Public Sub generarXML(DocEntry As String, objectType As String, oCompany As SAPbobsCOM.Company, SBO As SAPbouiCOM.Application)
@@ -7,7 +8,7 @@ Public Class generarGRXML
             Dim oRecord As SAPbobsCOM.Recordset
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
 
-            oRecord.DoQuery("exec ENCABEZADO_FACTURA '" & DocEntry & "','" & objectType & "'")
+            oRecord.DoQuery("CALL ENCABEZADO_FACTURA ('" & DocEntry & "','" & objectType & "')")
             Dim writer As New XmlTextWriter("Comprobante (GR) No." & DocEntry.ToString & ".xml", System.Text.Encoding.UTF8)
             writer.WriteStartDocument(True)
             writer.Formatting = Formatting.Indented
@@ -23,8 +24,8 @@ Public Class generarGRXML
             'createNode("claveAcesso", claveAcceso(oRecord).PadLeft(49, "0"), writer)
             'createNode("claveAcesso", "", writer)
             createNode("codDoc", oRecord.Fields.Item("codDoc").Value.ToString.PadLeft(2, "0"), writer)
-            createNode("estab", oRecord.Fields.Item("estable").Value.ToString.PadLeft(3, "0"), writer)
-            createNode("ptoEmi", oRecord.Fields.Item("ptoemi").Value.ToString.PadLeft(3, "0"), writer)
+            createNode("estab", oRecord.Fields.Item("estab").Value.ToString.PadLeft(3, "0"), writer)
+            createNode("ptoEmi", oRecord.Fields.Item("ptoEmi").Value.ToString.PadLeft(3, "0"), writer)
             createNode("secuencial", oRecord.Fields.Item("secuencial").Value.ToString.PadLeft(9, "0"), writer)
             createNode("dirMatriz", oRecord.Fields.Item("dirMatriz").Value.ToString, writer)
             Dim direccion = oRecord.Fields.Item("dirMatriz").Value.ToString
@@ -35,7 +36,7 @@ Public Class generarGRXML
 
             writer.WriteStartElement("infoGuiaRemision")
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-            oRecord.DoQuery("exec SP_INFO_FACTURA '" & DocEntry & "','" & objectType & "'")
+            oRecord.DoQuery("CALL SP_INFO_FACTURA ('" & DocEntry & "','" & objectType & "')")
             createNode("dirEstablecimiento", direccion, writer)
             createNode("dirPartida", direccion, writer)
             createNode("razonSocialTransportista", oRecord.Fields.Item(0).Value, writer)
@@ -59,7 +60,7 @@ Public Class generarGRXML
 
             writer.WriteStartElement("destinatarios")
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-            oRecord.DoQuery("exec SP_DetalleFac '" & DocEntry & "','" & objectType & "'")
+            oRecord.DoQuery("CALL SP_DetalleFac ('" & DocEntry & "','" & objectType & "')")
             If oRecord.RecordCount > 0 Then
                 While oRecord.EoF = False
                     Dim inicial = oRecord.Fields.Item(0).Value
@@ -72,7 +73,7 @@ Public Class generarGRXML
                     Dim oRecord2 As SAPbobsCOM.Recordset
                     oRecord2 = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
 
-                    oRecord2.DoQuery("EXEC  FACTURAS_GUIA_REMISION " & DocEntry & ",'" & inicial & "','" & final & "','" & oRecord.Fields.Item(3).Value & "',2")
+                    oRecord2.DoQuery("CALL  FACTURAS_GUIA_REMISION (" & DocEntry & ",'" & inicial & "','" & final & "','" & oRecord.Fields.Item(3).Value & "',2)")
                     If oRecord2.RecordCount > 0 Then
                         While oRecord2.EoF = False
                             writer.WriteStartElement("destinatario")
@@ -83,7 +84,7 @@ Public Class generarGRXML
                             createNode("codDocSustento", tipoDoc, writer)
                             Dim oRecord3 As SAPbobsCOM.Recordset
                             oRecord3 = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-                            oRecord3.DoQuery("EXEC  FACTURAS_GUIA_REMISION " & DocEntry & ",'" & oRecord2.Fields.Item(0).Value & "','" & final & "','" & identifi & "',1")
+                            oRecord3.DoQuery("CALL  FACTURAS_GUIA_REMISION (" & DocEntry & ",'" & oRecord2.Fields.Item(0).Value & "','" & final & "','" & identifi & "',1)")
                             If oRecord3.RecordCount > 0 Then
                                 writer.WriteStartElement("detalles")
                                 While oRecord3.EoF = False
@@ -121,7 +122,17 @@ Public Class generarGRXML
             System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecord)
             oRecord = Nothing
             GC.Collect()
-
+            If Directory.Exists("C:\OS_FE") = False Then
+                Directory.CreateDirectory("C:\OS_FE")
+            End If
+            Dim esta = Application.StartupPath & "\Comprobante (GR) No." & DocEntry.ToString & ".xml"
+            Dim va = "C:\OS_FE\Comprobante (GR) No." & DocEntry.ToString & ".xml"
+            If File.Exists(va) Then
+                File.Delete(va)
+                File.Move(esta, va)
+            Else
+                File.Move(esta, va)
+            End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try

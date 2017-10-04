@@ -134,7 +134,7 @@
                         End If
 
 
-                        sql = "CALL SERIES_PTO_ESTABLE ('1','" & oSerie.Value.Trim & "','" & oNoAutori.Value & "','" & oCaducidad.Value & "','" & oDire.Value & "','" & oCiudad.Value & "','" & oTelefono.Value.Trim & "','" & IIf(oDigital.Checked = True, "Y", "N") & "')"
+                        sql = "CALL SERIES_PTO_ESTABLE ('1','" & oSerie.Value.Trim & "','" & oNoAutori.Value & "','" & oCaducidad.Value & "','" & oDire.Value & "','" & oCiudad.Value & "','" & oTelefono.Value.Trim & "','" & IIf(oDigital.Checked = True, "Y", "N") & "','" & IIf(oXML.Checked = True, "Y", "N") & "')"
                         Dim orecord As SAPbobsCOM.Recordset
                         orecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
 
@@ -159,7 +159,7 @@
                                 Dim orecord As SAPbobsCOM.Recordset
                                 Dim Sql As String
                                 orecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-                                Sql = "CALL SERIES_PTO_ESTABLE ('3','" & code & "','" & oNoAutori.Value & "','" & oCaducidad.Value & "','" & oDire.Value & "','" & oCiudad.Value & "','" & oTelefono.Value.Trim & "','')"
+                                Sql = "CALL SERIES_PTO_ESTABLE ('3','" & code & "','" & oNoAutori.Value & "','" & oCaducidad.Value & "','" & oDire.Value & "','" & oCiudad.Value & "','" & oTelefono.Value.Trim & "','','')"
                                 orecord.DoQuery(Sql)
                                 carcarSeries()
                                 seriesImpresas()
@@ -208,7 +208,7 @@
             Dim gridView As SAPbouiCOM.Grid
             gridView = oForm.Items.Item("Item_0").Specific
             gridView.SelectionMode = SAPbouiCOM.BoMatrixSelect.ms_Single
-            Dim sql As String = "CALL SERIES_PTO_ESTABLE ('2','','','','','','','')"
+            Dim sql As String = "CALL SERIES_PTO_ESTABLE ('2','','','','','','','','')"
             oForm.DataSources.DataTables.Item(0).ExecuteQuery(sql)
             gridView.DataTable = oForm.DataSources.DataTables.Item("MyDataTable")
             gridView.AutoResizeColumns()

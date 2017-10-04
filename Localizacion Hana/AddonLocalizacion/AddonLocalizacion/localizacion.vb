@@ -424,6 +424,7 @@ Public Class localizacion
         oFilter.AddEx("GREMISION")
         oFilter.AddEx("65307")
         oFilter.AddEx("GREMISION_M")
+        oFilter.AddEx("T_GTRANSPORTISTA")
         'oFilter.AddEx("139") 'Orders Form
         'oFilter.AddEx("133") 'Invoice Form
         'oFilter.AddEx("169") 'Main Menu
@@ -805,7 +806,7 @@ Public Class localizacion
                 Dim oFac As New generarFXML
                 Dim oRecord As SAPbobsCOM.Recordset
                 oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-                oRecord.DoQuery("EXEC SP_AUTORIZAR_XML '" & docEntrynode.InnerText & "','13'")
+                oRecord.DoQuery("CALL SP_AUTORIZAR_XML ('" & docEntrynode.InnerText & "','13')")
                 If oRecord.RecordCount = 0 Then
                     BubbleEvent = False
                     Return
@@ -822,7 +823,7 @@ Public Class localizacion
                 Dim oNC As New generarNCXML
                 Dim oRecord As SAPbobsCOM.Recordset
                 oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-                oRecord.DoQuery("EXEC SP_AUTORIZAR_XML '" & docEntrynode.InnerText & "','14'")
+                oRecord.DoQuery("CALL SP_AUTORIZAR_XML ('" & docEntrynode.InnerText & "','14')")
                 If oRecord.RecordCount = 0 Then
                     BubbleEvent = False
                     Return
@@ -840,7 +841,7 @@ Public Class localizacion
                 Dim oFacturaExportacion As New generarFEXML
                 Dim oRecord As SAPbobsCOM.Recordset
                 oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-                oRecord.DoQuery("EXEC SP_AUTORIZAR_XML '" & docEntrynode.InnerText & "','13'")
+                oRecord.DoQuery("CALL SP_AUTORIZAR_XML ('" & docEntrynode.InnerText & "','13')")
                 If oRecord.RecordCount = 0 Then
                     BubbleEvent = False
                     Return
@@ -858,7 +859,7 @@ Public Class localizacion
                 Dim oNotaDebito As New generarNDXML
                 Dim oRecord As SAPbobsCOM.Recordset
                 oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-                oRecord.DoQuery("EXEC SP_AUTORIZAR_XML '" & docEntrynode.InnerText & "','13'")
+                oRecord.DoQuery("CALL SP_AUTORIZAR_XML ('" & docEntrynode.InnerText & "','13')")
                 If oRecord.RecordCount = 0 Then
                     BubbleEvent = False
                     Return
@@ -872,23 +873,23 @@ Public Class localizacion
                 Dim doc As New XmlDocument
                 doc.LoadXml(pVal.ObjectKey)
                 Dim docEntrynode = doc.DocumentElement.SelectSingleNode("/DocumentParams/DocEntry")
-                Dim oRecord As SAPbobsCOM.Recordset
-                oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-                oRecord.DoQuery("exec ACTUALIZANOTACREDITOPROVEEDORES '" & docEntrynode.InnerText & "'")
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecord)
-                oRecord = Nothing
-                GC.Collect()
+                'Dim oRecord As SAPbobsCOM.Recordset
+                ' oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
+                'oRecord.DoQuery("CALL ACTUALIZANOTACREDITOPROVEEDORES '" & docEntrynode.InnerText & "'")
+                'System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecord)
+                'oRecord = Nothing
+                ' GC.Collect()
             End If
             If pVal.FormTypeEx = "65306" And pVal.BeforeAction = False And pVal.ActionSuccess = True Then
                 Dim doc As New XmlDocument
                 doc.LoadXml(pVal.ObjectKey)
                 Dim docEntrynode = doc.DocumentElement.SelectSingleNode("/DocumentParams/DocEntry")
-                Dim oRecord As SAPbobsCOM.Recordset
-                oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-                oRecord.DoQuery("exec ACTUALIZANOTADEBITOPROVEEDORES " & docEntrynode.InnerText & "")
-                System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecord)
-                oRecord = Nothing
-                GC.Collect()
+                ' Dim oRecord As SAPbobsCOM.Recordset
+                'oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
+                'oRecord.DoQuery("CALL ACTUALIZANOTADEBITOPROVEEDORES " & docEntrynode.InnerText & "")
+                ' System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecord)
+                'oRecord = Nothing
+                'GC.Collect()
             End If
             If pVal.FormTypeEx = "GREMISION" And pVal.BeforeAction = False And pVal.ActionSuccess = True Then
                               
@@ -1311,7 +1312,7 @@ Public Class localizacion
         Dim bandera As Boolean = True
         Dim provincia = rucnum.Chars(0) & rucnum.Chars(1)
         If provincia >= 0 Then
-            If provincia <= 22 Then
+            If provincia <= 24 Then
             Else
                 SBO_Application.SetStatusBarMessage("Error provincia no válida", SAPbouiCOM.BoMessageTime.bmt_Medium, False)
                 Return bandera = False
@@ -1358,7 +1359,7 @@ Public Class localizacion
     Private Function digitoVerificadorPublico(rucnum As String, application As SAPbouiCOM.Application, cedula As Boolean) As Boolean
         Dim bandera As Boolean = True
         Dim provincia = rucnum.Chars(0) & rucnum.Chars(1)
-        If provincia <= 0 And provincia >= 23 Then
+        If provincia <= 0 And provincia >= 24 Then
             SBO_Application.SetStatusBarMessage("Error provincia no válida", SAPbouiCOM.BoMessageTime.bmt_Medium, False)
             Return bandera = False
         End If
@@ -1403,7 +1404,7 @@ Public Class localizacion
         Dim bandera As Boolean = True
         Dim provincia = rucnum.Chars(0) & rucnum.Chars(1)
         If provincia >= 0 Then
-            If provincia <= 22 Then
+            If provincia <= 24 Then
             Else
                 SBO_Application.SetStatusBarMessage("Error provincia no válida", SAPbouiCOM.BoMessageTime.bmt_Medium, False)
                 Return bandera = False

@@ -1,4 +1,5 @@
 ﻿Imports System.Xml
+Imports System.IO
 
 Public Class generarFXML
     Public Sub generarXML(DocEntry As String, objectType As String, oCompany As SAPbobsCOM.Company, SBO As SAPbouiCOM.Application)
@@ -7,7 +8,7 @@ Public Class generarFXML
             Dim oRecord As SAPbobsCOM.Recordset
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
 
-            oRecord.DoQuery("exec ENCABEZADO_FACTURA '" & DocEntry & "','" & objectType & "'")
+            oRecord.DoQuery("CALL ENCABEZADO_FACTURA ('" & DocEntry & "','" & objectType & "')")
             Dim writer As New XmlTextWriter("Comprobante (F) No." & DocEntry.ToString & ".xml", System.Text.Encoding.UTF8)
             writer.WriteStartDocument(True)
             writer.Formatting = Formatting.Indented
@@ -39,12 +40,12 @@ Public Class generarFXML
 
             writer.WriteStartElement("infoFactura")
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-            oRecord.DoQuery("exec SP_INFO_FACTURA '" & DocEntry & "','" & objectType & "'")
+            oRecord.DoQuery("CALL SP_INFO_FACTURA ('" & DocEntry & "','" & objectType & "')")
             createNode("fechaEmision", Date.Parse(oRecord.Fields.Item("DATE").Value.ToString).ToString("dd/MM/yyyy"), writer)
             createNode("dirEstablecimiento", direccion, writer)
             If oContriEspecial <> "" Then
                 createNode("contribuyenteEspecial", oContriEspecial, writer)
-            End If           
+            End If
             createNode("obligadoContabilidad", oObliconta, writer)
             createNode("tipoIdentificacionComprador", oRecord.Fields.Item("U_IDENTIFICACION").Value.ToString, writer)
             'createNode("guiaRemision", "", writer)
@@ -61,7 +62,7 @@ Public Class generarFXML
             GC.Collect()
 
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-            oRecord.DoQuery("exec SP_Total_Con_Impuesto '" & DocEntry & "','" & objectType & "'")
+            oRecord.DoQuery("CALL SP_Total_Con_Impuesto ('" & DocEntry & "','" & objectType & "')")
             If oRecord.RecordCount > 0 Then
                 While oRecord.EoF = False
                     writer.WriteStartElement("totalImpuesto")
@@ -86,7 +87,7 @@ Public Class generarFXML
 
             writer.WriteStartElement("pagos")
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-            oRecord.DoQuery("exec SP_Forma_Pago '" & DocEntry & "','" & objectType & "'")
+            oRecord.DoQuery("CALL SP_Forma_Pago ('" & DocEntry & "','" & objectType & "')")
             If oRecord.RecordCount > 0 Then
                 While oRecord.EoF = False
                     writer.WriteStartElement("pago")
@@ -111,7 +112,7 @@ Public Class generarFXML
 
             writer.WriteStartElement("detalles")
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-            oRecord.DoQuery("exec SP_DetalleFac '" & DocEntry & "','" & objectType & "'")
+            oRecord.DoQuery("CALL SP_DetalleFac ('" & DocEntry & "','" & objectType & "')")
 
 
             If oRecord.RecordCount > 0 Then
@@ -127,7 +128,7 @@ Public Class generarFXML
                     createNode("descuento", oRecord.Fields.Item(4).Value.ToString, writer)
                     createNode("precioTotalSinImpuesto", oRecord.Fields.Item(6).Value.ToString, writer)
                     writer.WriteStartElement("impuestos")
-                    oRecord2.DoQuery("exec SP_Impuesto_Detalle '" & DocEntry & "','" & oRecord.Fields.Item(0).Value.ToString & "','13'")
+                    oRecord2.DoQuery("CALL SP_Impuesto_Detalle ('" & DocEntry & "','" & oRecord.Fields.Item(0).Value.ToString & "','13')")
                     If oRecord2.RecordCount > 0 Then
                         While oRecord2.EoF = False
                             writer.WriteStartElement("impuesto")
@@ -156,7 +157,18 @@ Public Class generarFXML
             ''Cierre Factura
             writer.WriteEndElement()
             writer.WriteEndDocument()
-            writer.Close()            
+            writer.Close()
+            If Directory.Exists("C:\OS_FE") = False Then
+                Directory.CreateDirectory("C:\OS_FE")
+            End If
+            Dim esta = Application.StartupPath & "\Comprobante (F) No." & DocEntry.ToString & ".xml"
+            Dim va = "C:\OS_FE\Comprobante (F) No." & DocEntry.ToString & ".xml"
+            If File.Exists(va) Then
+                File.Delete(va)
+                File.Move(esta, va)
+            Else
+                File.Move(esta, va)
+            End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try

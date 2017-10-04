@@ -413,7 +413,7 @@ Public Class pago_retencion_cliente
         Try
             Dim orecord As SAPbobsCOM.Recordset
             orecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-            Dim sql As String = "SELECT SUM(A." & Chr(34) & "LineTotal" & Chr(34) & ") FROM INV1 A WHERE A." & Chr(34) & "DocEntry " & Chr(34) & " = '" & val & "'"
+            Dim sql As String = "SELECT SUM(A." & Chr(34) & "LineTotal" & Chr(34) & ") FROM INV1 A WHERE A." & Chr(34) & "DocEntry" & Chr(34) & " = '" & val & "'"
             orecord.DoQuery(sql)
             If orecord.RecordCount > 0 Then
                 Return orecord.Fields.Item(0).Value

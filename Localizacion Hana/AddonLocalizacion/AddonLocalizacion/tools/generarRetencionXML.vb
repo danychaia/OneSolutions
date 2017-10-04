@@ -1,4 +1,5 @@
 ﻿Imports System.Xml
+Imports System.IO
 
 Public Class generarRetencionXML
     Public Sub generaRetencionXML(docEntry As String, Tipo As String, ByVal SBO_Application As SAPbouiCOM.Application, ByVal oCompany As SAPbobsCOM.Company)
@@ -140,6 +141,8 @@ Public Class generarRetencionXML
             ' Else
             ' AgregarNodo(docEntry, Tipo, SBO_Application, oCompany, ruta)
             '   End If
+
+           
         Catch ex As Exception
             SBO_Application.SetStatusBarMessage(ex.Message, SAPbouiCOM.BoMessageTime.bmt_Medium, True)
         End Try
@@ -151,7 +154,7 @@ Public Class generarRetencionXML
         writer.WriteEndElement()
     End Sub
 
-  
+
 
     Private Sub AgregarNodo(docEntry As String, Tipo As String, SBO_Application As SAPbouiCOM.Application, oCompany As SAPbobsCOM.Company, url As String)
         Try
@@ -174,13 +177,13 @@ Public Class generarRetencionXML
             Dim doc As New XmlDocument
             Dim oRecord As SAPbobsCOM.Recordset
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-            oRecord.DoQuery("SELECT A.DocEntry  FROM OPCH A WHERE A.DocEntry=" & DocEntry & " AND  ISNULL(A.U_A_APLICARR,'01')='01'")
+            oRecord.DoQuery("SELECT A." & Chr(34) & "DocEntry" & Chr(34) & " From OPCH A Where A." & Chr(34) & "DocEntry" & Chr(34) & "=" & DocEntry & " And IFNULL (A." & Chr(34) & "U_A_APLICARR" & Chr(34) & ",'01')='01'")
             If oRecord.RecordCount > 0 Then
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecord)
                 oRecord = Nothing
                 GC.Collect()
                 oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-                oRecord.DoQuery("exec ENCABEZADO_FACTURA '" & DocEntry & "','RTNC'")
+                oRecord.DoQuery("CALL ENCABEZADO_FACTURA ('" & DocEntry & "','RTNC')")
                 Dim writer As New XmlTextWriter("Comprobante (RC) No." & DocEntry.ToString & ".xml", System.Text.Encoding.UTF8)
                 writer.WriteStartDocument(True)
                 writer.Formatting = Formatting.Indented
@@ -196,8 +199,8 @@ Public Class generarRetencionXML
                 'createNode("claveAcesso", claveAcceso(oRecord).PadLeft(49, "0"), writer)
                 'createNode("claveAcesso", "", writer)
                 createNode("codDoc", oRecord.Fields.Item("codDoc").Value.ToString.PadLeft(2, "0"), writer)
-                createNode("estab", oRecord.Fields.Item("estable").Value.ToString.PadLeft(3, "0"), writer)
-                createNode("ptoEmi", oRecord.Fields.Item("ptoemi").Value.ToString.PadLeft(3, "0"), writer)
+                createNode("estab", oRecord.Fields.Item("estab").Value.ToString.PadLeft(3, "0"), writer)
+                createNode("ptoEmi", oRecord.Fields.Item("ptoEmi").Value.ToString.PadLeft(3, "0"), writer)
                 createNode("secuencial", oRecord.Fields.Item("secuencial").Value.ToString.PadLeft(9, "0"), writer)
                 createNode("dirMatriz", oRecord.Fields.Item("dirMatriz").Value.ToString, writer)
                 Dim direccion = oRecord.Fields.Item("dirMatriz").Value.ToString
@@ -214,10 +217,12 @@ Public Class generarRetencionXML
 
                 writer.WriteStartElement("infoCompRetencion")
                 oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-                oRecord.DoQuery("exec SP_INFO_FACTURA '" & DocEntry & "','RTNC'")
+                oRecord.DoQuery("CALL SP_INFO_FACTURA ('" & DocEntry & "','RTNC')")
                 createNode("fechaEmision", Date.Parse(oRecord.Fields.Item("DocDate").Value.ToString).ToString("dd/MM/yyyy"), writer)
                 createNode("dirEstablecimiento", direccion, writer)
-                createNode("contribuyenteEspecial", contribuyenteEspecial, writer)
+                If contribuyenteEspecial <> "" Then
+                    createNode("contribuyenteEspecial", contribuyenteEspecial, writer)
+                End If
                 createNode("obligadoContabilidad", obliConta, writer)
                 createNode("tipoIdentificacionSujetoRetenido", oRecord.Fields.Item("U_IDENTIFICACION").Value.ToString, writer)
                 createNode("razonSocialSujetoRetenido", oRecord.Fields.Item("CardName").Value.ToString, writer)
@@ -230,7 +235,7 @@ Public Class generarRetencionXML
                 oRecord = Nothing
                 GC.Collect()
                 oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-                oRecord.DoQuery("exec SP_Impuesto_Detalle " & DocEntry & ",'','RTNC'")
+                oRecord.DoQuery("CALL SP_Impuesto_Detalle (" & DocEntry & ",'','RTNC')")
                 If oRecord.RecordCount > 0 Then
                     writer.WriteStartElement("impuestos")
                     While oRecord.EoF = False
@@ -257,8 +262,19 @@ Public Class generarRetencionXML
                 writer.WriteEndElement()
                 writer.WriteEndDocument()
                 writer.Close()
+                If Directory.Exists("C:\OS_FE") = False Then
+                    Directory.CreateDirectory("C:\OS_FE")
+                End If
+                Dim esta = Application.StartupPath & "\Comprobante (RC) No." & DocEntry.ToString & ".xml"
+                Dim va = "C:\OS_FE\Comprobante (RC) No." & DocEntry.ToString & ".xml"
+                If File.Exists(va) Then
+                    File.Delete(va)
+                    File.Move(esta, va)
+                Else
+                    File.Move(esta, va)
+                End If
             End If
-           
+
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try

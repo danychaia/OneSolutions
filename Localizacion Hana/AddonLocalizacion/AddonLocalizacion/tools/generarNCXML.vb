@@ -1,4 +1,5 @@
 ﻿Imports System.Xml
+Imports System.IO
 
 Public Class generarNCXML
 
@@ -7,7 +8,7 @@ Public Class generarNCXML
             Dim doc As New XmlDocument
             Dim oRecord As SAPbobsCOM.Recordset
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-            oRecord.DoQuery("exec ENCABEZADO_FACTURA '" & DocEntry & "','14'")
+            oRecord.DoQuery("CALL ENCABEZADO_FACTURA ('" & DocEntry & "','14')")
             Dim writer As New XmlTextWriter("Comprobante (NC) No." & DocEntry.ToString & ".xml", System.Text.Encoding.UTF8)
             writer.WriteStartDocument(True)
             writer.Formatting = Formatting.Indented
@@ -23,8 +24,8 @@ Public Class generarNCXML
             'createNode("claveAcesso", claveAcceso(oRecord).PadLeft(49, "0"), writer)
             'createNode("claveAcesso", "", writer)
             createNode("codDoc", oRecord.Fields.Item("codDoc").Value.ToString.PadLeft(2, "0"), writer)
-            createNode("estab", oRecord.Fields.Item("estable").Value.ToString.PadLeft(3, "0"), writer)
-            createNode("ptoEmi", oRecord.Fields.Item("ptoemi").Value.ToString.PadLeft(3, "0"), writer)
+            createNode("estab", oRecord.Fields.Item("estab").Value.ToString.PadLeft(3, "0"), writer)
+            createNode("ptoEmi", oRecord.Fields.Item("ptoEmi").Value.ToString.PadLeft(3, "0"), writer)
             createNode("secuencial", oRecord.Fields.Item("secuencial").Value.ToString.PadLeft(9, "0"), writer)
             createNode("dirMatriz", oRecord.Fields.Item("dirMatriz").Value.ToString, writer)
             Dim direccion = oRecord.Fields.Item("dirMatriz").Value.ToString
@@ -39,7 +40,7 @@ Public Class generarNCXML
 
             writer.WriteStartElement("infoNotaCredito")
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-            oRecord.DoQuery("exec SP_INFO_FACTURA '" & DocEntry & "','14'")
+            oRecord.DoQuery("CALL SP_INFO_FACTURA ('" & DocEntry & "','14')")
             createNode("fechaEmision", Date.Parse(oRecord.Fields.Item("DATE").Value.ToString).ToString("dd/MM/yyyy"), writer)
             createNode("dirEstablecimiento", direccion, writer)
             createNode("tipoIdentificacionComprador", oRecord.Fields.Item("U_IDENTIFICACION").Value.ToString, writer)
@@ -65,7 +66,7 @@ Public Class generarNCXML
             GC.Collect()
 
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-            oRecord.DoQuery("exec SP_Total_Con_Impuesto '" & DocEntry & "','14'")
+            oRecord.DoQuery("CALL SP_Total_Con_Impuesto ('" & DocEntry & "','14')")
             If oRecord.RecordCount > 0 Then
                 While oRecord.EoF = False
                     writer.WriteStartElement("totalImpuesto")
@@ -88,7 +89,7 @@ Public Class generarNCXML
 
             writer.WriteStartElement("detalles")
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-            oRecord.DoQuery("exec SP_DetalleFac '" & DocEntry & "','14'")
+            oRecord.DoQuery("CALL SP_DetalleFac ('" & DocEntry & "','14')")
             If oRecord.RecordCount > 0 Then
                 While oRecord.EoF = False
                     Dim oRecord2 As SAPbobsCOM.Recordset
@@ -101,7 +102,7 @@ Public Class generarNCXML
                     createNode("descuento", oRecord.Fields.Item(4).Value.ToString, writer)
                     createNode("precioTotalSinImpuesto", oRecord.Fields.Item(6).Value, writer)
                     writer.WriteStartElement("impuestos")
-                    oRecord2.DoQuery("exec SP_Impuesto_Detalle '" & DocEntry & "','" & oRecord.Fields.Item(0).Value.ToString & "','14'")
+                    oRecord2.DoQuery("CALL SP_Impuesto_Detalle ('" & DocEntry & "','" & oRecord.Fields.Item(0).Value.ToString & "','14')")
                     If oRecord2.RecordCount > 0 Then
                         While oRecord2.EoF = False
                             writer.WriteStartElement("impuesto")
@@ -130,6 +131,17 @@ Public Class generarNCXML
             ''Cierre Nota de crédito 
             writer.WriteEndElement()
             writer.Close()
+            If Directory.Exists("C:\OS_FE") = False Then
+                Directory.CreateDirectory("C:\OS_FE")
+            End If
+            Dim esta = Application.StartupPath & "\Comprobante (NC) No." & DocEntry.ToString & ".xml"
+            Dim va = "C:\OS_FE\Comprobante (NC) No." & DocEntry.ToString & ".xml"
+            If File.Exists(va) Then
+                File.Delete(va)
+                File.Move(esta, va)
+            Else
+                File.Move(esta, va)
+            End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
