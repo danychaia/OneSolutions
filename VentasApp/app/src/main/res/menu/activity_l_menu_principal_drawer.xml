@@ -5,11 +5,16 @@
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="Clientes" />
+        <item
+            android:id="@+id/nav_pedido"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Pedido" />
+
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:title="Inventario" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
