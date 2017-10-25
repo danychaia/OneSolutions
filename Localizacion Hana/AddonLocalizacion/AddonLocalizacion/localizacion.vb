@@ -266,7 +266,7 @@ Public Class localizacion
             oCreationPackage.UniqueID = "pCli"
             oCreationPackage.String = "Retenciones en Venta"
             oMenus.AddEx(oCreationPackage)
-          
+
             oCreationPackage.Type = SAPbouiCOM.BoMenuType.mt_POPUP
             oCreationPackage.UniqueID = "CRtn"
             oCreationPackage.Position = "2"
@@ -311,22 +311,23 @@ Public Class localizacion
             oCreationPackage.String = "Generar ATS"
             oMenus.AddEx(oCreationPackage)
 
+            'oMenuItem = SBO_Application.Menus.Item("gui")
+            'oMenus = oMenuItem.SubMenus
+            'oCreationPackage.Type = SAPbouiCOM.BoMenuType.mt_STRING
+            'oCreationPackage.UniqueID = "GRe"
+            'oCreationPackage.String = "Guía de Remisión"
+            'oMenus.AddEx(oCreationPackage)
             oMenuItem = SBO_Application.Menus.Item("gui")
             oMenus = oMenuItem.SubMenus
-            oCreationPackage.Type = SAPbouiCOM.BoMenuType.mt_STRING
-            oCreationPackage.UniqueID = "GRe"
-            oCreationPackage.String = "Guía de Remisión"
-            oMenus.AddEx(oCreationPackage)
-
             oCreationPackage.Type = SAPbouiCOM.BoMenuType.mt_STRING
             oCreationPackage.UniqueID = "guiM"
             oCreationPackage.String = "Guía de Remisión Masiva"
             oMenus.AddEx(oCreationPackage)
 
-            oCreationPackage.Type = SAPbouiCOM.BoMenuType.mt_STRING
-            oCreationPackage.UniqueID = "tran"
-            oCreationPackage.String = "Transportista"
-            oMenus.AddEx(oCreationPackage)
+            'oCreationPackage.Type = SAPbouiCOM.BoMenuType.mt_STRING
+            'oCreationPackage.UniqueID = "tran"
+            'oCreationPackage.String = "Transportista"
+            'oMenus.AddEx(oCreationPackage)
 
             oMenuItem = SBO_Application.Menus.Item("inf")
             oMenus = oMenuItem.SubMenus
@@ -344,7 +345,7 @@ Public Class localizacion
 
             oMenuItem = SBO_Application.Menus.Item("Mta")
             oMenus = oMenuItem.SubMenus
-            
+
 
             oCreationPackage.Type = SAPbouiCOM.BoMenuType.mt_STRING
             oCreationPackage.UniqueID = "ss"
@@ -361,6 +362,9 @@ Public Class localizacion
         Catch ex As Exception
             SBO_Application.SetStatusBarMessage(ex.Message.ToString, SAPbouiCOM.BoMessageTime.bmt_Long, True)
         End Try
+
+
+
 
     End Sub
 
@@ -425,6 +429,7 @@ Public Class localizacion
         oFilter.AddEx("65307")
         oFilter.AddEx("GREMISION_M")
         oFilter.AddEx("T_GTRANSPORTISTA")
+        oFilter.AddEx("UDO_FT_GREMISION")
         'oFilter.AddEx("139") 'Orders Form
         'oFilter.AddEx("133") 'Invoice Form
         'oFilter.AddEx("169") 'Main Menu
@@ -583,29 +588,29 @@ Public Class localizacion
                 If pVal.FormTypeEx = "141" And pVal.Before_Action = True And pVal.ItemUID = "1" Then
                     If pVal.EventType = SAPbouiCOM.BoEventTypes.et_ITEM_PRESSED Then
                         Try
-                            Dim oUForm = SBOApplication.Forms.GetForm("-141", pVal.FormTypeCount)
-                            Dim oNumRetencion As SAPbouiCOM.EditText
+                            '    Dim oUForm = SBOApplication.Forms.GetForm("-141", pVal.FormTypeCount)
+                            'Dim oNumRetencion As SAPbouiCOM.EditText
                             ' Dim oSEstable As SAPbouiCOM.EditText
                             ' Dim optoEmision As SAPbouiCOM.EditText
                             'Dim oEstableReten As SAPbouiCOM.EditText
                             ' Dim optoRetencion As SAPbouiCOM.EditText
-                            Dim oSusTribu As SAPbouiCOM.ComboBox
-                            Dim oTipoComro As SAPbouiCOM.ComboBox
-                            Dim oAplicarRetencion As SAPbouiCOM.ComboBox
+                            ' Dim oSusTribu As SAPbouiCOM.ComboBox
+                            ' Dim oTipoComro As SAPbouiCOM.ComboBox
+                            ' Dim oAplicarRetencion As SAPbouiCOM.ComboBox
                             'Dim oAutoRetencion As SAPbouiCOM.EditText
 
                             ' oSEstable = oUForm.Items.Item("U_SERIE_ESTABLE").Specific
                             'optoEmision = oUForm.Items.Item("U_PTO_EMISION").Specific
                             'oEstableReten = oUForm.Items.Item("U_STBLE_RETENCION").Specific
                             'optoRetencion = oUForm.Items.Item("U_PTO_RETENCION").Specific
-                            oSusTribu = oUForm.Items.Item("U_SUS_TRIBU").Specific
-                            oTipoComro = oUForm.Items.Item("U_TI_COMPRO").Specific
-                            oNumRetencion = oUForm.Items.Item("U_RETENCION_NO").Specific
-                            oAplicarRetencion = oUForm.Items.Item("U_A_APLICARR").Specific
+                            ' oSusTribu = oUForm.Items.Item("U_SUS_TRIBU").Specific
+                            'oTipoComro = oUForm.Items.Item("U_TI_COMPRO").Specific
+                            'oNumRetencion = oUForm.Items.Item("U_RETENCION_NO").Specific
+                            'oAplicarRetencion = oUForm.Items.Item("U_A_APLICARR").Specific
 
-                            If UDT_UF.code <> "" Then
-                                oNumRetencion.Value = UDT_UF.code
-                            End If
+                            'If UDT_UF.code <> "" Then
+                            'oNumRetencion.Value = UDT_UF.code
+                            'End If
 
                             ' oAutoRetencion = oUForm.Items.Item("U_AUTORI_RETENCION").Specific
                             ' Else
@@ -650,10 +655,10 @@ Public Class localizacion
                 If pVal.FormTypeEx = "181" And pVal.Before_Action = True And pVal.ItemUID = "1" Then
                     If pVal.EventType = SAPbouiCOM.BoEventTypes.et_CLICK Then
                         Try
-                            Dim oAutoRetencion As SAPbouiCOM.EditText
-                            Dim oUForm = SBOApplication.Forms.GetForm("-181", pVal.FormTypeCount)
-                            oAutoRetencion = oUForm.Items.Item("U_RETENCION_NO").Specific
-                            oAutoRetencion.Value = UDT_UF.code
+                            'Dim oAutoRetencion As SAPbouiCOM.EditText
+                            'Dim oUForm = SBOApplication.Forms.GetForm("-181", pVal.FormTypeCount)
+                            'oAutoRetencion = oUForm.Items.Item("U_RETENCION_NO").Specific
+                            'oAutoRetencion.Value = UDT_UF.code
                         Catch ex As Exception
                             SBO_Application.SetStatusBarMessage(ex.Message, SAPbouiCOM.BoMessageTime.bmt_Medium, True)
                         End Try
@@ -663,10 +668,10 @@ Public Class localizacion
                 If pVal.FormTypeEx = "65303" And pVal.Before_Action = True And pVal.ItemUID = "1" Then
                     If pVal.EventType = SAPbouiCOM.BoEventTypes.et_CLICK Then
                         Try
-                            Dim oAutoRetencion As SAPbouiCOM.EditText
-                            Dim oUForm = SBOApplication.Forms.GetForm("-65303", pVal.FormTypeCount)
-                            oAutoRetencion = oUForm.Items.Item("U_RETENCION_NO").Specific
-                            oAutoRetencion.Value = UDT_UF.code
+                            'Dim oAutoRetencion As SAPbouiCOM.EditText
+                            'Dim oUForm = SBOApplication.Forms.GetForm("-65303", pVal.FormTypeCount)
+                            'oAutoRetencion = oUForm.Items.Item("U_RETENCION_NO").Specific
+                            'oAutoRetencion.Value = UDT_UF.code
                         Catch ex As Exception
                             SBO_Application.SetStatusBarMessage(ex.Message, SAPbouiCOM.BoMessageTime.bmt_Medium, True)
                         End Try
@@ -891,16 +896,33 @@ Public Class localizacion
                 'oRecord = Nothing
                 'GC.Collect()
             End If
-            If pVal.FormTypeEx = "GREMISION" And pVal.BeforeAction = False And pVal.ActionSuccess = True Then
-                              
+            If pVal.FormTypeEx = "UDO_FT_GREMISION" And pVal.BeforeAction = False And pVal.ActionSuccess = True Then
                 Dim oRecord As SAPbobsCOM.Recordset
                 Dim docEntry As String = ""
                 oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-                oRecord.DoQuery("exec ACTUALIZAR_DOC_GUIA")
+
+                oRecord.DoQuery("CALL ACTUALIZAR_DOC_GUIA()")
 
                 If oRecord.RecordCount > 0 Then
                     docEntry = oRecord.Fields.Item(0).Value
                 End If
+
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecord)
+                oRecord = Nothing
+                GC.Collect()
+
+
+                oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
+                oRecord.DoQuery("CALL SP_AUTORIZAR_XML ('" & docEntry & "','GR')")
+                If oRecord.RecordCount = 0 Then
+                    BubbleEvent = False
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecord)
+                    oRecord = Nothing
+                    GC.Collect()
+                    Return
+                End If
+
+
                 Dim generaXml As New generarGRXML
                 generaXml.generarXML(docEntry, "GR", oCompany, SBOApplication)
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecord)
@@ -1188,6 +1210,7 @@ Public Class localizacion
             UDT_UF.userField(oCompany, "OPCH", "Gastos Transporte", 45, "G_TRANS_OTROS", SAPbobsCOM.BoFieldTypes.db_Float, False, SBOApplication)
             UDT_UF.userField(oCompany, "OPCH", "Guia Remision", 45, "G_REMISION", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
             UDT_UF.userField(oCompany, "OPCH", "Transportista", 60, "TRANSPORTISTA", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
+            UDT_UF.userField(oCompany, "OPCH", "XML", 3, "Genero XML", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
 
 
             UDT_UF.userField(oCompany, "OPCH", "Fecha pago Dividendo", 60, "P_DIVIDENDO", SAPbobsCOM.BoFieldTypes.db_Date, False, SBOApplication)
@@ -2140,6 +2163,24 @@ Public Class localizacion
             validArray.Add(oValid)
 
             UDT_UF.updateUserField(oCompany, "OJDT", "APLICA_ATS", validArray)
+
+
+
+            validArray.Clear()
+
+            oValid = Nothing
+            oValid = New validValues
+            oValid.value = "01"
+            oValid.descrip = "SI"
+            validArray.Add(oValid)
+
+            oValid = Nothing
+            oValid = New validValues
+
+            oValid.value = "02"
+            oValid.descrip = "NO"
+            validArray.Add(oValid)
+            UDT_UF.updateUserField(oCompany, "OPCH", "XML", validArray)
 
             Dim oRecordA As SAPbobsCOM.Recordset
 

@@ -37,7 +37,7 @@ Public Class generarGRXML
             writer.WriteStartElement("infoGuiaRemision")
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
             oRecord.DoQuery("CALL SP_INFO_FACTURA ('" & DocEntry & "','" & objectType & "')")
-            createNode("dirEstablecimiento", direccion, writer)
+            createNode("dirEstablecimiento", oRecord.Fields.Item("DIRECCION").Value.ToString, writer)
             createNode("dirPartida", direccion, writer)
             createNode("razonSocialTransportista", oRecord.Fields.Item(0).Value, writer)
             createNode("tipoIdentificacionTransportista", oRecord.Fields.Item(1).Value.ToString, writer)
@@ -72,7 +72,7 @@ Public Class generarGRXML
                     Dim razon = oRecord.Fields.Item(6).Value
                     Dim oRecord2 As SAPbobsCOM.Recordset
                     oRecord2 = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-
+                    Dim sssj = "CALL  FACTURAS_GUIA_REMISION (" & DocEntry & ",'" & inicial & "','" & final & "','" & oRecord.Fields.Item(3).Value & "',2)"
                     oRecord2.DoQuery("CALL  FACTURAS_GUIA_REMISION (" & DocEntry & ",'" & inicial & "','" & final & "','" & oRecord.Fields.Item(3).Value & "',2)")
                     If oRecord2.RecordCount > 0 Then
                         While oRecord2.EoF = False

@@ -56,7 +56,7 @@
         Try
             Dim gridView As SAPbouiCOM.Grid
             gridView = oForm.Items.Item("Item_0").Specific
-            Dim sql As String = "EXEC BUSCAR_INFO_DETALLE_RETENCION '" & UDT_UF.docEntry & "'"
+            Dim sql As String = "CALL BUSCAR_INFO_DETALLE_RETENCION ('" & UDT_UF.docEntry & "')"
             oForm.DataSources.DataTables.Item(0).ExecuteQuery(sql)
             gridView.DataTable = oForm.DataSources.DataTables.Item("MyDataTable")
             gridView.AutoResizeColumns()

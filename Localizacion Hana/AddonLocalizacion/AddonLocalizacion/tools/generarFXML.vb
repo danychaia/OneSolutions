@@ -42,7 +42,7 @@ Public Class generarFXML
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
             oRecord.DoQuery("CALL SP_INFO_FACTURA ('" & DocEntry & "','" & objectType & "')")
             createNode("fechaEmision", Date.Parse(oRecord.Fields.Item("DATE").Value.ToString).ToString("dd/MM/yyyy"), writer)
-            createNode("dirEstablecimiento", direccion, writer)
+            createNode("dirEstablecimiento", oRecord.Fields.Item("DIRECCION").Value.ToString, writer)
             If oContriEspecial <> "" Then
                 createNode("contribuyenteEspecial", oContriEspecial, writer)
             End If

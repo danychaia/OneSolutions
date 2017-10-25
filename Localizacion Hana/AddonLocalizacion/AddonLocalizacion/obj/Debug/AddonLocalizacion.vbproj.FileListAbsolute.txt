@@ -48,3 +48,28 @@ C:\Users\habab1\Desktop\ESCRITORIO\AddonLocalizacion\AddonLocalizacion\obj\Debug
 C:\Users\habab1\Desktop\ESCRITORIO\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.exe
 C:\Users\habab1\Desktop\ESCRITORIO\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.xml
 C:\Users\habab1\Desktop\ESCRITORIO\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.pdb
+C:\Users\habab1\Desktop\Nueva version localización Hana\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.exe.config
+C:\Users\habab1\Desktop\Nueva version localización Hana\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.exe
+C:\Users\habab1\Desktop\Nueva version localización Hana\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.pdb
+C:\Users\habab1\Desktop\Nueva version localización Hana\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.xml
+C:\Users\habab1\Desktop\Nueva version localización Hana\AddonLocalizacion\AddonLocalizacion\obj\Debug\Interop.SAPbobsCOM.dll
+C:\Users\habab1\Desktop\Nueva version localización Hana\AddonLocalizacion\AddonLocalizacion\obj\Debug\Interop.SAPbouiCOM.dll
+C:\Users\habab1\Desktop\Nueva version localización Hana\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.vbproj.ResolveComReference.cache
+C:\Users\habab1\Desktop\Nueva version localización Hana\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.Resources.resources
+C:\Users\habab1\Desktop\Nueva version localización Hana\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.vbproj.GenerateResource.Cache
+C:\Users\habab1\Desktop\Nueva version localización Hana\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.exe
+C:\Users\habab1\Desktop\Nueva version localización Hana\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.xml
+C:\Users\habab1\Desktop\Nueva version localización Hana\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.pdb
+C:\Users\habab1\Desktop\Nueva version localización Hana\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.vbprojResolveAssemblyReference.cache
+C:\Users\Sap\Desktop\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.exe.config
+C:\Users\Sap\Desktop\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.exe
+C:\Users\Sap\Desktop\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.pdb
+C:\Users\Sap\Desktop\AddonLocalizacion\AddonLocalizacion\bin\Debug\AddonLocalizacion.xml
+C:\Users\Sap\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\Interop.SAPbobsCOM.dll
+C:\Users\Sap\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\Interop.SAPbouiCOM.dll
+C:\Users\Sap\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.vbproj.ResolveComReference.cache
+C:\Users\Sap\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.Resources.resources
+C:\Users\Sap\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.vbproj.GenerateResource.Cache
+C:\Users\Sap\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.exe
+C:\Users\Sap\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.xml
+C:\Users\Sap\Desktop\AddonLocalizacion\AddonLocalizacion\obj\Debug\AddonLocalizacion.pdb

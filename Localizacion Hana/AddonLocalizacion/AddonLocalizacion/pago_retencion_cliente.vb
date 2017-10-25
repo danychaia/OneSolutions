@@ -34,6 +34,7 @@ Public Class pago_retencion_cliente
             Else
                 oForm = Me.SBO_Application.Forms.Item("pCliente")
             End If
+            cargarchooseFromList()
             cargarcombo()
             cargarSeriesSAP()
         Catch ex As Exception
@@ -226,14 +227,14 @@ Public Class pago_retencion_cliente
                     Return
                 End If
 
-                Dim sql As String = "CALL INF_PAGO_RETENCION ('1','" & txtCliente.Value & "','" & txtDocumento.Value & "'," & oBase.Value.Trim & "," & oRetencion.Value & "," & (Double.Parse(oBase.Value) / 100) * Double.Parse(txtBaseImponible.Value) & "," & (IIf(oRetencion.Value.Trim = "", 0, Double.Parse(oRetencion.Value)) / 100) * Double.Parse(Impuesto.Value) & ",'" & oBase.Selected.Description & "','" & oRetencion.Selected.Description & "','C')"
+                Dim sql As String = "CALL INF_PAGO_RETENCION ('1','" & txtCliente.Value & "','" & txtDocumento.Value & "'," & oBase.Value.Trim & "," & oRetencion.Value & ",'" & ((Double.Parse(oBase.Value) / 100) * Double.Parse(txtBaseImponible.Value)).ToString & "','" & ((IIf(oRetencion.Value.Trim = "", 0, Double.Parse(oRetencion.Value)) / 100) * Double.Parse(Impuesto.Value)).ToString & "','" & oBase.Selected.Description & "','" & oRetencion.Selected.Description & "','C')"
                 orecord.DoQuery(sql)
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(orecord)
                 orecord = Nothing
                 GC.Collect()
                 cargarRetenciones(txtCliente.Value, txtDocumento.Value)
 
-                sql = "CALL INF_PAGO_RETENCION ('4','" & txtCliente.Value & "','" & txtDocumento.Value & "'," & oBase.Value.Trim & "," & oRetencion.Value & "," & (Double.Parse(oBase.Value) / 100) * Double.Parse(txtBaseImponible.Value) & "," & (IIf(oRetencion.Value.Trim = "", 0, Double.Parse(oRetencion.Value)) / 100) * Double.Parse(Impuesto.Value) & ",'" & txtCuentaB.Value & "','" & txtCuentaR.Value & "','C')"
+                sql = "CALL INF_PAGO_RETENCION ('4','" & txtCliente.Value & "','" & txtDocumento.Value & "'," & oBase.Value.Trim & "," & oRetencion.Value & ",'" & ((Double.Parse(oBase.Value) / 100) * Double.Parse(txtBaseImponible.Value)).ToString & "','" & ((IIf(oRetencion.Value.Trim = "", 0, Double.Parse(oRetencion.Value)) / 100) * Double.Parse(Impuesto.Value)).ToString & "','" & txtCuentaB.Value & "','" & txtCuentaR.Value & "','C')"
                 orecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
                 orecord.DoQuery(sql)
                              
@@ -364,6 +365,9 @@ Public Class pago_retencion_cliente
                         System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecordv)
                         oRecordv = Nothing
                         GC.Collect()
+
+                        oRecordv = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
+                        oRecordv.DoQuery("UPDATE OINV SET ""U_A_APLICARR"" = 01 WHERE ""DocEntry"" = " & txtDocumento.Value)
                         oForm.Close()
                     End If
                     BubbleEvent = False
@@ -641,4 +645,32 @@ Public Class pago_retencion_cliente
         End Try
     End Sub
 
+    Private Sub cargarchooseFromList()
+        Try
+            'Dim oCFLEvento As SAPbouiCOM.IChooseFromListEvent
+            ' oCFLEvento = pVal
+            'Dim sCFL_ID As String
+            'sCFL_ID = oCFLEvento.ChooseFromListUID
+            Dim oForm As SAPbouiCOM.Form
+            oForm = SBO_Application.Forms.Item("pCliente")
+            Dim oCFL As SAPbouiCOM.ChooseFromList
+            oCFL = oForm.ChooseFromLists.Item("CFL_1")
+            Dim ocon As SAPbouiCOM.Condition
+            Dim oCons As SAPbouiCOM.Conditions
+            oCons = oCFL.GetConditions
+            ocon = oCons.Add
+            ocon.Alias = "DocStatus"
+            ocon.Operation = SAPbouiCOM.BoConditionOperation.co_EQUAL
+            ocon.CondVal = "O"
+            ocon.Relationship = SAPbouiCOM.BoConditionRelationship.cr_AND
+            ocon = oCons.Add
+            ocon.Alias = "U_A_APLICARR"
+            ocon.Operation = SAPbouiCOM.BoConditionOperation.co_IS_NULL
+            ocon.CondVal = "NULL"
+            oCFL.SetConditions(oCons)
+
+        Catch ex As Exception
+            SBO_Application.SetStatusBarMessage(ex.Message, SAPbouiCOM.BoMessageTime.bmt_Short, True)
+        End Try
+    End Sub
 End Class

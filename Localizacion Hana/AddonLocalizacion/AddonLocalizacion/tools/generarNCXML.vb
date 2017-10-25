@@ -42,7 +42,7 @@ Public Class generarNCXML
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
             oRecord.DoQuery("CALL SP_INFO_FACTURA ('" & DocEntry & "','14')")
             createNode("fechaEmision", Date.Parse(oRecord.Fields.Item("DATE").Value.ToString).ToString("dd/MM/yyyy"), writer)
-            createNode("dirEstablecimiento", direccion, writer)
+            createNode("dirEstablecimiento", oRecord.Fields.Item("DIRECCION").Value.ToString, writer)
             createNode("tipoIdentificacionComprador", oRecord.Fields.Item("U_IDENTIFICACION").Value.ToString, writer)
             createNode("razonSocialComprador", oRecord.Fields.Item("CardName").Value.ToString, writer)
             createNode("identificacionComprador", oRecord.Fields.Item("U_DOCUMENTO").Value.ToString, writer)

@@ -1,4 +1,6 @@
-﻿Public Class guia_remision_masiva
+﻿Imports System.Globalization
+
+Public Class guia_remision_masiva
 
 
     Private XmlForm As String = Replace(Application.StartupPath & "\guia_remision_masiva.srf", "\\", "\")
@@ -101,32 +103,53 @@
                     gridView = oForm.Items.Item("Item_17").Specific
                     Dim oTipoDocumento As SAPbouiCOM.ComboBox = oForm.Items.Item("Item_1").Specific
                     Dim oBusca As SAPbouiCOM.ComboBox = oForm.Items.Item("Item_3").Specific
-
-                    If validaringreso() = False Then
-                        BubbleEvent = False
-                        Return
+                    If oTipoDocumento.Value.Trim <> "05" Then
+                        If validaringreso() = False Then
+                            BubbleEvent = False
+                            Return
+                        End If
                     End If
+
+
 
                     If gridView.Rows.SelectedRows.Count = 0 Then
                         SBO_Application.SetStatusBarMessage("Debe de Seleccionar al menos una Fila", SAPbouiCOM.BoMessageTime.bmt_Short, True)
                         BubbleEvent = False
                         Return
                     End If
-                    Dim Progress = SBOApplication.StatusBar.CreateProgressBar("Generando Guia de remision para " & gridView.Rows.SelectedRows.Count & " Líneas seleccionadas", gridView.Rows.SelectedRows.Count, True)
-                    'Progress.Value = 0
-                    For i As Integer = 0 To gridView.Rows.Count - 1
-                        If gridView.Rows.IsSelected(i) = True Then
-                            GenerarGuiaRemision(oTipoDocumento.Value.Trim, oBusca.Value.Trim, gridView.DataTable.GetValue(0, i), gridView.DataTable.GetValue(1, i))
-                            Progress.Value = Progress.Value + 1
-                        End If
+                    If oTipoDocumento.Value.Trim <> "05" Then
+                        Dim Progress = SBOApplication.StatusBar.CreateProgressBar("Generando Guia de remision para " & gridView.Rows.SelectedRows.Count & " Líneas seleccionadas", gridView.Rows.SelectedRows.Count, True)
+                        'Progress.Value = 0
+                        For i As Integer = 0 To gridView.Rows.Count - 1
+                            If gridView.Rows.IsSelected(i) = True Then
+                                GenerarGuiaRemision(oTipoDocumento.Value.Trim, oBusca.Value.Trim, gridView.DataTable.GetValue(0, i), gridView.DataTable.GetValue(1, i))
+                                Progress.Value = Progress.Value + 1
+                            End If
 
-                    Next
-                    gridView.Rows.SelectedRows.Clear()
-                    gridView.DataTable.Clear()                    
-                    Progress.Stop()
-                    Progress = Nothing
+                        Next
+                        gridView.Rows.SelectedRows.Clear()
+                        gridView.DataTable.Clear()
+                        Progress.Stop()
+                        Progress = Nothing
+                    Else
+                        Dim Progress = SBOApplication.StatusBar.CreateProgressBar("Generando XML de Facturas " & gridView.Rows.SelectedRows.Count & " Líneas seleccionadas", gridView.Rows.SelectedRows.Count, True)
+                        'Progress.Value = 0
+                        Dim facXML As New generarFXML
+                        For i As Integer = 0 To gridView.Rows.Count - 1
+                            If gridView.Rows.IsSelected(i) = True Then
+                                facXML.generarXML(gridView.DataTable.GetValue(0, i).ToString, "13", oCompany, SBO_Application)
+                                Progress.Value = Progress.Value + 1
+                            End If
+
+                        Next
+                        gridView.Rows.SelectedRows.Clear()
+                        gridView.DataTable.Clear()
+                        Progress.Stop()
+                        Progress = Nothing
+                    End If
+
                 End If
-            End If
+                End If
 
 
             If FormUID = "GREMISION_M" And pVal.Before_Action = False Then
@@ -188,7 +211,7 @@
         Try
             Dim gridView As SAPbouiCOM.Grid
             gridView = oForm.Items.Item("Item_17").Specific
-            Dim sql As String = "EXEC BUSCAR_DOC_GUIA '" & p1 & "','" & p2 & "'"
+            Dim sql As String = "CALL BUSCAR_DOC_GUIA ('" & p1 & "','" & p2 & "')"
             oForm.DataSources.DataTables.Item(0).ExecuteQuery(sql)
             gridView.DataTable = oForm.DataSources.DataTables.Item("MyDataTable")
             gridView.AutoResizeColumns()
@@ -239,15 +262,15 @@
             'oGeneralData.SetProperty("Canceled", "N")
             oGeneralData.SetProperty("Series", oSeries.Value.Trim)
             oGeneralData.SetProperty("U_RUC_DESTI", RUC.ToString)
-            oRecord.DoQuery("exec SP_CONSULTAS '1','" & DOC.ToString & "'")
+            oRecord.DoQuery("CALL SP_CONSULTAS ('1','" & DOC.ToString & "')")
             oGeneralData.SetProperty("U_PTO_PARTIDA", oRecord.Fields.Item(0).Value)
-            oGeneralData.SetProperty("U_PTO_LLEGADA", oRecord.Fields.Item(0).Value)
+            oGeneralData.SetProperty("U_PTO_LLEGADA", oRecord.Fields.Item(1).Value)
             System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecord)
             oRecord = Nothing
             GC.Collect()
-            oGeneralData.SetProperty("U_F_ITRASLADO", oFechaI.Value)
-            oGeneralData.SetProperty("U_F_ITRASLADO", oFechaI.Value)
-            oGeneralData.SetProperty("U_F_FTRASLADO", oFechaLL.Value)
+            oGeneralData.SetProperty("U_F_ITRASLADO", Date.Parse(DateTime.ParseExact(oFechaI.Value.ToString, "yyyyMMdd", CultureInfo.InvariantCulture)).ToString("yyyy/MM/dd"))
+            oGeneralData.SetProperty("U_F_ITRASLADO", Date.Parse(DateTime.ParseExact((oFechaI.Value.ToString), "yyyyMMdd", CultureInfo.InvariantCulture)).ToString("yyyy/MM/dd"))
+            oGeneralData.SetProperty("U_F_FTRASLADO", Date.Parse(DateTime.ParseExact(oFechaLL.Value.ToString, "yyyyMMdd", CultureInfo.InvariantCulture)).ToString("yyyy/MM/dd"))
             oGeneralData.SetProperty("U_G_TRANSPOR", oTransport.Value)
             oGeneralData.SetProperty("U_TRANPORTISTA", oNombreT.Value)
             oGeneralData.SetProperty("U_PLACA", oPlaca.Value)
@@ -262,19 +285,19 @@
             oChild.SetProperty("U_N_EMPAQUE", "")
             oGeneralService.Add(oGeneralData)
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-            oRecord.DoQuery("SELECT MAX(A.DocEntry) FROM [@GREMISION] A")
+            oRecord.DoQuery("SELECT MAX(A.""DocEntry"") FROM ""@GREMISION"" A")
             If oRecord.RecordCount > 0 Then
                 Docentry = oRecord.Fields.Item(0).Value
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecord)
                 oRecord = Nothing
                 GC.Collect()
                 oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-                oRecord.DoQuery("INSERT INTO [@G_ULTIMO] VALUES ('GUIA'," & Docentry & ")")
+                oRecord.DoQuery("INSERT INTO ""@G_ULTIMO"" VALUES ('" & Docentry & "','GUIA'," & Docentry & ")")
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecord)
                 oRecord = Nothing
                 GC.Collect()
                 oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-                oRecord.DoQuery("exec ACTUALIZAR_DOC_GUIA")
+                oRecord.DoQuery("CALL ACTUALIZAR_DOC_GUIA()")
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecord)
                 oRecord = Nothing
                 GC.Collect()
@@ -359,7 +382,7 @@
         Try
             Dim oRecord As SAPbobsCOM.Recordset
             oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-            oRecord.DoQuery("SELECT Name FROM [@T_GTRANSPORTISTA] A WHERE A.Code='" & val & "'")
+            oRecord.DoQuery("SELECT ""Name"" FROM ""@T_GTRANSPORTISTA"" A WHERE A.""Code""='" & val & "'")
             If oRecord.RecordCount > 0 Then
                 nombre = oRecord.Fields.Item(0).Value
             End If

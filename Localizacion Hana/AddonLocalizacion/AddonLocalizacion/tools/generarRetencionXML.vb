@@ -219,7 +219,7 @@ Public Class generarRetencionXML
                 oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
                 oRecord.DoQuery("CALL SP_INFO_FACTURA ('" & DocEntry & "','RTNC')")
                 createNode("fechaEmision", Date.Parse(oRecord.Fields.Item("DocDate").Value.ToString).ToString("dd/MM/yyyy"), writer)
-                createNode("dirEstablecimiento", direccion, writer)
+                createNode("dirEstablecimiento", oRecord.Fields.Item("DIRECCION").Value.ToString, writer)
                 If contribuyenteEspecial <> "" Then
                     createNode("contribuyenteEspecial", contribuyenteEspecial, writer)
                 End If
