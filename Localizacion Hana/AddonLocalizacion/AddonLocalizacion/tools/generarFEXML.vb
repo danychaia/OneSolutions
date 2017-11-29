@@ -12,7 +12,6 @@ Public Class generarFEXML
             Dim gastosAduaneros As String
             Dim gastosTransporteOtros As String
 
-
             oRecord.DoQuery("CALL ENCABEZADO_FACTURA ('" & DocEntry & "','13E')")
             Dim writer As New XmlTextWriter("Comprobante (FE) No." & DocEntry.ToString & ".xml", System.Text.Encoding.UTF8)
             writer.WriteStartDocument(True)
@@ -149,8 +148,28 @@ Public Class generarFEXML
                     createNode("precioUnitario", oRecord.Fields.Item(3).Value.ToString, writer)
                     createNode("descuento", oRecord.Fields.Item(4).Value.ToString, writer)
                     createNode("precioTotalSinImpuesto", oRecord.Fields.Item(5).Value.ToString, writer)
+
+                    oRecord2.DoQuery("CALL SP_DETALLEADICIONALES ('" & DocEntry & "','FE','" & oRecord.Fields.Item(0).Value.ToString & "')")
+                    If oRecord2.RecordCount > 0 Then
+                        writer.WriteStartElement("detallesAdicionales")
+                        While oRecord2.EoF = False
+                            writer.WriteStartElement("detAdicional")
+                            writer.WriteAttributeString("nombre", oRecord2.Fields.Item("nombre").Value)
+                            writer.WriteAttributeString("valor", oRecord2.Fields.Item("Valor").Value)
+                            writer.WriteEndElement()
+                            oRecord2.MoveNext()
+                        End While
+                        writer.WriteEndElement()
+                    End If
+
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecord2)
+                    oRecord2 = Nothing
+                    GC.Collect()
+
+                    oRecord2 = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
+
                     writer.WriteStartElement("impuestos")
-                    oRecord2.DoQuery("CALL SP_Impuesto_Detalle ('" & DocEntry & "','" & oRecord.Fields.Item(0).Value.ToString & "','13')")
+                    oRecord2.DoQuery("CALL SP_Impuesto_Detalle ('" & DocEntry & "','" & oRecord.Fields.Item(0).Value & "','13')")
                     If oRecord2.RecordCount > 0 Then
                         While oRecord2.EoF = False
                             writer.WriteStartElement("impuesto")
@@ -176,6 +195,35 @@ Public Class generarFEXML
 
             ''Cierre detalles
             writer.WriteEndElement()
+
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecord)
+            oRecord = Nothing
+            GC.Collect()
+            ''Abre Campos Adicionales
+
+            oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
+            Dim en = "CALL SP_INFOADICIONAL ('" & DocEntry & "','FE')"
+            oRecord.DoQuery(en)
+            If oRecord.RecordCount > 0 Then
+                writer.WriteStartElement("infoAdicional")
+
+                While oRecord.EoF = False
+                    writer.WriteStartElement("campoAdicional")
+                    writer.WriteAttributeString("nombre", oRecord.Fields.Item("nombre").Value)
+                    writer.WriteString(oRecord.Fields.Item("Valor").Value)
+                    writer.WriteEndElement()
+                    oRecord.MoveNext()
+                End While
+                writer.WriteEndElement()
+                'Cierre Campos Adicionales
+
+            End If
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecord)
+            oRecord = Nothing
+            GC.Collect()
+
+
+
             ''Cierre Factura
             writer.WriteEndElement()
             writer.WriteEndDocument()
@@ -191,6 +239,19 @@ Public Class generarFEXML
             Else
                 File.Move(esta, va)
             End If
+            If My.Computer.FileSystem.FileExists(Application.StartupPath & "\CONFIGURACION.xml") = True Then
+                Dim Docc As New XmlDocument, ListaNodos As XmlNodeList, Nodo As XmlNode
+                Dim Lista As ArrayList = New ArrayList()
+                Docc.Load(Application.StartupPath & "\CONFIGURACION.xml")
+
+                ListaNodos = Docc.SelectNodes("/CONFIGURACION/PARAMETRO")
+
+                For Each Nodo In ListaNodos
+                    Lista.Add(Nodo.ChildNodes.Item(0).InnerText)
+                Next
+                My.Computer.Network.UploadFile(va, Lista(0).ToString & "Comprobante (FE) No." & DocEntry.ToString & ".xml", Lista(1).ToString, Lista(2).ToString, True, 2500, FileIO.UICancelOption.DoNothing)
+            End If
+           
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try

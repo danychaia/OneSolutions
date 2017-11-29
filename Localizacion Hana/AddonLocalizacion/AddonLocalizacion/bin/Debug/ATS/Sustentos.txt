@@ -1,13 +1,13 @@
 SUSTENTO	OPCH	SUS_TRIBU		
-1	Credito Tributario para Declaracion de IVA	SUS_TRIBU	value
-2	Costo o Gasto para declaracion de IR	SUS_TRIBU	value
-3	Activo Fijo - Credito Tributario para declaracion de IVA	SUS_TRIBU	value
-4	Activo Fijo - Costo o Gasto para declaracion de IR	SUS_TRIBU	value
-5	Liquidacion Gastos de Viaje, hospedaje y alimentacion Gastos IR	SUS_TRIBU	value
-6	Inventario - Credito Tributario para declaracion de IVA	SUS_TRIBU	value
-7	Inventario - Costo o Gasto para declaracion de IR	SUS_TRIBU	value
-8	Valor pagado para solicitar Reembolso de Gasto	SUS_TRIBU	value
-9	Reembolso por Siniestros	SUS_TRIBU	value
+01	Credito Tributario para Declaracion de IVA	SUS_TRIBU	value
+02	Costo o Gasto para declaracion de IR	SUS_TRIBU	value
+03	Activo Fijo - Credito Tributario para declaracion de IVA	SUS_TRIBU	value
+04	Activo Fijo - Costo o Gasto para declaracion de IR	SUS_TRIBU	value
+05	Liquidacion Gastos de Viaje, hospedaje y alimentacion Gastos IR	SUS_TRIBU	value
+06	Inventario - Credito Tributario para declaracion de IVA	SUS_TRIBU	value
+07	Inventario - Costo o Gasto para declaracion de IR	SUS_TRIBU	value
+08	Valor pagado para solicitar Reembolso de Gasto	SUS_TRIBU	value
+09	Reembolso por Siniestros	SUS_TRIBU	value
 10	Distribucion de Dividendos, Beneficios o Utilidades	SUS_TRIBU	value
 99	No Procesar para Anexo Transaccional	SUS_TRIBU	value
 0	Casos Especiales cuyo Sustento no Aplica en las Opciones Anteriores	SUS_TRIBU	fin

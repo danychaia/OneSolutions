@@ -1078,8 +1078,8 @@ Public Class localizacion
             UDT_UF.userField(oCompany, "@GREMISION", "RUC DESTINATARIO", 35, "RUC_DESTI", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
             UDT_UF.userField(oCompany, "@GREMISION", "DESTINATARIO", 30, "RUC_DESTI", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
             UDT_UF.userField(oCompany, "@GREMISION", "No. DOCUMENTO", 30, "N_DOCUMENTO", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
-            UDT_UF.userField(oCompany, "@GREMISION", "PUNTO DE LLEGADA", 30, "PTO_LLEGADA", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
-            UDT_UF.userField(oCompany, "@GREMISION", "PUNTO DE PARTIDA", 30, "PTO_PARTIDA", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
+            UDT_UF.userField(oCompany, "@GREMISION", "PUNTO DE LLEGADA", 90, "PTO_LLEGADA", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
+            UDT_UF.userField(oCompany, "@GREMISION", "PUNTO DE PARTIDA", 90, "PTO_PARTIDA", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
             UDT_UF.userField(oCompany, "@GREMISION", "FECHA INICIO TRASLADO", 30, "F_ITRASLADO", SAPbobsCOM.BoFieldTypes.db_Date, False, SBOApplication)
             UDT_UF.userField(oCompany, "@GREMISION", "FECHA FIN TRASLADO", 30, "F_FTRASLADO", SAPbobsCOM.BoFieldTypes.db_Date, False, SBOApplication)
             UDT_UF.userField(oCompany, "@GREMISION", "GUIA TRASPORTISTA FINAL", 30, "G_TFINAL", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)
@@ -1218,6 +1218,7 @@ Public Class localizacion
             UDT_UF.userField(oCompany, "OPCH", "IR Asoc. Dividendo", 4, "IR_DIVIDENDO", SAPbobsCOM.BoFieldTypes.db_Numeric, False, SBOApplication)
             UDT_UF.userField(oCompany, "OPCH", "Cant. Caja Banano", 4, "C_BANANO", SAPbobsCOM.BoFieldTypes.db_Float, False, SBOApplication)
             UDT_UF.userField(oCompany, "OPCH", "Precio Caja Banano", 4, "PC_BANANO", SAPbobsCOM.BoFieldTypes.db_Float, False, SBOApplication)
+            UDT_UF.userField(oCompany, "OPCH", "Motivo", 100, "MOTIVO", SAPbobsCOM.BoFieldTypes.db_Float, False, SBOApplication)
 
             'CAMPOS PARA FACTURA DE REEEMBOLSO
             UDT_UF.userField(oCompany, "PCH1", "Tipo Proveedor ", 13, "T_PROVEEDOR", SAPbobsCOM.BoFieldTypes.db_Alpha, False, SBOApplication)

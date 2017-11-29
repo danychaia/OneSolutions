@@ -212,6 +212,31 @@ Public Class generarFRXML
                 ''Cierre Reembolso
                 writer.WriteEndElement()
 
+
+
+                ''Abre Campos Adicionales
+
+                oRecord = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
+                Dim en = "CALL SP_INFOADICIONAL ('" & DocEntry & "','FR')"
+                oRecord.DoQuery(en)
+                If oRecord.RecordCount > 0 Then
+                    writer.WriteStartElement("infoAdicional")
+
+                    While oRecord.EoF = False
+                        writer.WriteStartElement("campoAdicional")
+                        writer.WriteAttributeString("nombre", oRecord.Fields.Item("nombre").Value)
+                        writer.WriteString(oRecord.Fields.Item("Valor").Value)
+                        writer.WriteEndElement()
+                        oRecord.MoveNext()
+                    End While
+                    writer.WriteEndElement()
+                    'Cierre Campos Adicionales
+
+                End If
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecord)
+                oRecord = Nothing
+                GC.Collect()
+
                 ''Cierre Factura
                 writer.WriteEndElement()
                 writer.WriteEndDocument()
@@ -227,6 +252,20 @@ Public Class generarFRXML
                 Else
                     File.Move(esta, va)
                 End If
+
+                If My.Computer.FileSystem.FileExists(Application.StartupPath & "\CONFIGURACION.xml") = True Then
+                    Dim Docc As New XmlDocument, ListaNodos As XmlNodeList, Nodo As XmlNode
+                    Dim Lista As ArrayList = New ArrayList()
+                    Docc.Load(Application.StartupPath & "\CONFIGURACION.xml")
+
+                    ListaNodos = Docc.SelectNodes("/CONFIGURACION/PARAMETRO")
+
+                    For Each Nodo In ListaNodos
+                        Lista.Add(Nodo.ChildNodes.Item(0).InnerText)
+                    Next
+                    My.Computer.Network.UploadFile(va, Lista(0).ToString & "Comprobante (FR) No." & DocEntry.ToString & ".xml", Lista(1).ToString, Lista(2).ToString, True, 2500, FileIO.UICancelOption.DoNothing)
+                End If
+                
             Else
                 System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecord)
                 oRecord = Nothing

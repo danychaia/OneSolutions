@@ -262,7 +262,7 @@ Public Class guia_remision_masiva
             'oGeneralData.SetProperty("Canceled", "N")
             oGeneralData.SetProperty("Series", oSeries.Value.Trim)
             oGeneralData.SetProperty("U_RUC_DESTI", RUC.ToString)
-            oRecord.DoQuery("CALL SP_CONSULTAS ('1','" & DOC.ToString & "')")
+            oRecord.DoQuery("CALL SP_CONSULTAS ('1','" & DOC.ToString & "','" & oTipoDocumento.Value.Trim & "')")
             oGeneralData.SetProperty("U_PTO_PARTIDA", oRecord.Fields.Item(0).Value)
             oGeneralData.SetProperty("U_PTO_LLEGADA", oRecord.Fields.Item(1).Value)
             System.Runtime.InteropServices.Marshal.ReleaseComObject(oRecord)

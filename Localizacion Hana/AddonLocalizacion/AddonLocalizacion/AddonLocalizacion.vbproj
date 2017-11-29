@@ -107,6 +107,7 @@
     <Compile Include="retencion_numeros.vb" />
     <Compile Include="series.vb" />
     <Compile Include="SubMain.vb" />
+    <Compile Include="tools\EnviarFTP.vb" />
     <Compile Include="tools\generarATS.vb" />
     <Compile Include="tools\generarFEXML.vb" />
     <Compile Include="tools\generarFRXML.vb" />
@@ -123,7 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <Generator>PublicVbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
@@ -161,6 +162,12 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\factura_comprobante.srf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\ATS.srf" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
